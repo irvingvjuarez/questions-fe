@@ -13,11 +13,11 @@ export const Home = () => {
 				</h3>
 
 				<ButtonsContainer>
-					<Button>
+					<Button linkUrl="/game/new" variant="standard">
 						Create New Game Room
 					</Button>
 
-					<Button>
+					<Button linkUrl="/game/code" variant="standard">
 						Enter Game Code
 					</Button>
 				</ButtonsContainer>
