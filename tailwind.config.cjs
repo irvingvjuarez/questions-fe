@@ -23,6 +23,9 @@ module.exports = {
 				"option3-dark": "var(--option3-dark)",
 				"option4": "var(--option4)",
 				"option4-dark": "var(--option4-dark)"
+			},
+			width: {
+				"input": "300px"
 			}
 		},
   },

@@ -7,20 +7,20 @@ type ButtonProps = {
 	variant?: "standard" | "active" | "inactive"
 }
 
-const baseCss = "text-white rounded-lg py-2"
+const baseCss = "rounded-lg py-2"
 
 export const Button: React.FC<ButtonProps> = ({ children, linkUrl, variant, containerCss }) => {
 	let complementaryCss = ""
 
 	switch(variant) {
 		case "standard":
-			complementaryCss += "font-medium text-lg bg-logo-clear w-[261px]"
+			complementaryCss += "text-white font-medium text-lg bg-logo-clear w-[261px]"
 		break;
 		case "active":
+			complementaryCss += "text-background-dark font-bold text-xl bg-logo-clear w-input"
 		break;
 		case "inactive":
-		break;
-		default:
+			complementaryCss += "text-white border-logo-clear border-2 font-bold w-input"
 		break;
 	}
 

@@ -17,6 +17,8 @@
   --option3-dark: #FFC000;
   --option4: #01BCD6;
   --option4-dark: #009FB5;
+
+	--input-w: 300px;
 }
 
 body {
