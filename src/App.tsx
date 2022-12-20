@@ -2,7 +2,13 @@ import './App.css'
 
 function App() {
   return (
-    <h2 className='text-3xl font-bold underline'>Hello World</h2>
+    <>
+      <header>
+        <button>
+          <img width={205} src="src/assets/questions-logo-clear.png" alt="logo" />
+        </button>
+      </header>
+    </>
   )
 }
 
