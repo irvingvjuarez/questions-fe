@@ -4,7 +4,7 @@ type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({ children }) => {
 	return (
-		<button>
+		<button className="text-white font-medium text-lg bg-logo-clear">
 			{children}
 		</button>
 	)
