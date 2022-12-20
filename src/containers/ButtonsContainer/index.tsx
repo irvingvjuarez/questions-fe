@@ -3,8 +3,11 @@ type ButtonsContainerProps = {
 }
 
 export const ButtonsContainer: React.FC<ButtonsContainerProps> = ({ children }) => {
+	const moreThanOneChildren = Array.isArray(children)
+	const containerStyles = moreThanOneChildren ? "flex flex-col space-y-3 items-center" : ""
+
 	return (
-		<div className="flex flex-col space-y-3 items-center">
+		<div className={containerStyles}>
 			{children}
 		</div>
 	)
