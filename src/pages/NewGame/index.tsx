@@ -12,7 +12,7 @@ export const NewGame = () => {
 				</Input>
 
 				<Input>
-					Add answer option:
+					Add answer's option:
 				</Input>
 			</Form>
 
