@@ -7,19 +7,21 @@ export const Home = () => {
 		<>
 			<Header />
 
-			<h3 className="text-white tracking-wide text-lg">
-				Create questionnaries easily, quickly and for free.
-			</h3>
+			<main className="h-[76vh] flex flex-col justify-between">
+				<h3 className="text-white tracking-wide text-lg">
+					Create questionnaries easily, quickly and for free.
+				</h3>
 
-			<ButtonsContainer>
-				<Button>
-					Create New Game Room
-				</Button>
+				<ButtonsContainer>
+					<Button>
+						Create New Game Room
+					</Button>
 
-				<Button>
-					Enter Game Code
-				</Button>
-			</ButtonsContainer>
+					<Button>
+						Enter Game Code
+					</Button>
+				</ButtonsContainer>
+			</main>
 		</>
 	)
 }
