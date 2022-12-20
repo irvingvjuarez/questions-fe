@@ -1,14 +1,14 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { Home } from './pages/Home'
 
 function App() {
   return (
-    <>
-      <header>
-        <button>
-          <img width={205} src="src/assets/questions-logo-clear.png" alt="logo" />
-        </button>
-      </header>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
