@@ -1,9 +1,9 @@
-import { Header } from "../../components/Header"
+import { Header } from "@app/components/Header"
 
 export const Home = () => {
-    return (
-        <>
-            <Header />
-        </>
-    )
+	return (
+		<>
+			<Header />
+		</>
+	)
 }
