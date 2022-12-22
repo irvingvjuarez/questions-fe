@@ -7,11 +7,11 @@ import { useRef, useState } from "react"
 export const NewGame = () => {
 	const questionInputRef = useRef<HTMLInputElement | null>(null)
 	const answerInputRef = useRef<HTMLInputElement | null>(null)
-
 	const [inputsValues, setInputValues] = useState<{[key:string]: string}>({
 		questionInput: "",
 		answerInput: ""
 	})
+	const buttonsAvailable = Object.values(inputsValues).every(input => Boolean(input))
 
 	const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const name = evt.target.name as string
@@ -20,8 +20,6 @@ export const NewGame = () => {
 			[name]: evt.target.value
 		}))
 	}
-
-	console.log(inputsValues)
 
 	return (
 		<section>
@@ -44,11 +42,11 @@ export const NewGame = () => {
 			</Form>
 
 			<ButtonsContainer>
-				<Button variant="active">
+				<Button variant="active" disabled={!buttonsAvailable}>
 					GO!
 				</Button>
 
-				<Button variant="inactive">
+				<Button variant="inactive" disabled={!buttonsAvailable}>
 					Add another answer option
 				</Button>
 			</ButtonsContainer>

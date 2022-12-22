@@ -18,6 +18,9 @@
   --option4: #01BCD6;
   --option4-dark: #009FB5;
 
+	--disabled-clear: #959090;
+	--disbaled-dark: #605d5d;
+
 	--input-w: 300px;
 }
 
@@ -38,5 +41,7 @@ body {
 }
 
 .btn:disabled {
-	background-color: red;
+	background-color: var(--disabled-clear);
+	border: none;
+	color: var(--disbaled-dark);
 }
