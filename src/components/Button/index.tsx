@@ -5,10 +5,11 @@ type ButtonProps = {
 	children: string;
 	linkUrl?: string;
 	containerCss?: string;
-	variant?: "standard" | "active" | "inactive"
+	variant?: "standard" | "active" | "inactive";
+	disabled?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, linkUrl, variant, containerCss }) => {
+export const Button: React.FC<ButtonProps> = ({ children, linkUrl, variant, containerCss, disabled = false }) => {
 	const containerStyles = getStyles(variant, containerCss)
 
 	if (linkUrl) return (
@@ -18,7 +19,7 @@ export const Button: React.FC<ButtonProps> = ({ children, linkUrl, variant, cont
 	)
 
 	return (
-		<button className={containerStyles}>
+		<button className={containerStyles} disabled={disabled}>
 			{children}
 		</button>
 	)

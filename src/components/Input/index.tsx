@@ -1,11 +1,13 @@
+import React from "react"
+
 type InputProps = {
 	children: string;
-	ref?: React.MutableRefObject<HTMLInputElement | null>;
 	name?: string;
 	handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Input: React.FC<InputProps> = ({ children, ref, name, handleChange }) => {
+export const Input = React.forwardRef<HTMLInputElement | null, InputProps>((props, ref) => {
+	const { children, name, handleChange } = props;
 	const inputID = children.split(" ").join("-")
 
 	return (
@@ -24,4 +26,4 @@ export const Input: React.FC<InputProps> = ({ children, ref, name, handleChange 
 			/>
 		</div>
 	)
-}
+})
