@@ -11,7 +11,7 @@ export const NewGame = () => {
 		questionInput: "",
 		answerInput: ""
 	})
-	const buttonsAvailable = Object.values(inputsValues).every(input => Boolean(input))
+	const disabledButtons = Object.values(inputsValues).some(input => !Boolean(input))
 
 	const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const name = evt.target.name as string
@@ -42,11 +42,11 @@ export const NewGame = () => {
 			</Form>
 
 			<ButtonsContainer>
-				<Button variant="active" disabled={!buttonsAvailable}>
+				<Button variant="active" disabled={disabledButtons}>
 					GO!
 				</Button>
 
-				<Button variant="inactive" disabled={!buttonsAvailable}>
+				<Button variant="inactive" disabled={disabledButtons}>
 					Add another answer option
 				</Button>
 			</ButtonsContainer>
