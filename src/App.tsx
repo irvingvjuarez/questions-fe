@@ -9,7 +9,7 @@ import { questionsReducer } from "@app/reducers/questions.reducer"
 import { QuestionsProvider } from "@app/contexts/questions.context"
 
 function App() {
-	const [questions, questionsDispatch] = useReducer(questionsReducer, {});
+	const [questions, questionsDispatch] = useReducer(questionsReducer, { questions: [] });
 	const questionsValue = { ...questions, questionsDispatch }
 
   return (

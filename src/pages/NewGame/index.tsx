@@ -3,8 +3,9 @@ import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import { ErrorMsg } from "@app/components/ErrorMsg"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { MAX_ANSWERS } from "@app/globals"
+import { questionsContext } from "@app/contexts/questions.context"
 
 type NewGameInput = {
 	label: string;
@@ -42,7 +43,7 @@ export const NewGame = () => {
 		}
 	}
 
-	const addNewInput = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const addNewInput = () => {
 		if (inputs.length >= MAX_ANSWERS) {
 			setErrorMsgs(prev => [
 				...prev,
@@ -62,6 +63,12 @@ export const NewGame = () => {
 	}
 
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
+
+	const questionsValue = useContext(questionsContext)
+
+	const addNewQuestion = () => {
+		console.log({ questionsValue })
+	}
 
 	return (
 		<section>
@@ -89,7 +96,11 @@ export const NewGame = () => {
 			</Form>
 
 			<ButtonsContainer>
-				<Button variant="active" disabled={disabledButtons}>
+				<Button
+					handleClick={addNewQuestion}
+					variant="active"
+					disabled={disabledButtons}
+				>
 					GO!
 				</Button>
 

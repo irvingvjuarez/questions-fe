@@ -17,6 +17,7 @@ export const Input = React.forwardRef<HTMLInputElement | null, InputProps>((prop
 			</label>
 
 			<input
+				autoComplete="off"
 				onChange={handleChange}
 				name={name}
 				ref={ref}
