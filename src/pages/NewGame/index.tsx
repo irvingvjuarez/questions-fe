@@ -93,7 +93,11 @@ export const NewGame = () => {
 					GO!
 				</Button>
 
-				<Button handleClick={addNewInput} variant="inactive" disabled={disabledButtons}>
+				<Button
+					handleClick={addNewInput}
+					variant="inactive"
+					disabled={errorMsgs.length > 0 ? true : disabledButtons}
+				>
 					Add another answer option
 				</Button>
 			</ButtonsContainer>
