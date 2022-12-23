@@ -8,58 +8,43 @@ type NewGameInput = {
 	label: string;
 	ref: React.MutableRefObject<HTMLInputElement | null>;
 	name: string;
-	handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+	handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 }
 
 export const NewGame = () => {
-	// let updateInputs: NewGameInput["handleChange"] = undefined;
+	const [inputs, setInputs] = useState<NewGameInput[]>([
+		{
+			label: "Type your question:",
+			ref: React.createRef<HTMLInputElement | null>(),
+			name: "questionInput",
+			value: ""
+		},
+		{
+			label: "Add answer's option:",
+			ref: React.createRef<HTMLInputElement | null>(),
+			name: "answerInput",
+			value: ""
+		}
+	])
 
-	const [inputs, setInputs] = useState<NewGameInput[]>([])
 	const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const {name} = evt.target;
-
 		const index = inputs.findIndex(input => input.name == name);
 
-		const newInputs = [...inputs]
-		newInputs[index].value = evt.target.value
-		setInputs(newInputs)
+		console.log({ inputs, name })
+
+		if (index >= 0) {
+			const newInputs = [...inputs];
+			newInputs[index].value = evt.target.value;
+			setInputs(newInputs)
+		}
 	}
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
 	useEffect(() => {
-		setInputs([
-			{
-				label: "Type your question:",
-				ref: React.createRef<HTMLInputElement | null>(),
-				name: "questionInput",
-				handleChange: updateInputs,
-				value: ""
-			},
-			{
-				label: "Add answer's option:",
-				ref: React.createRef<HTMLInputElement | null>(),
-				name: "answerInput",
-				handleChange: updateInputs,
-				value: ""
-			}
-		])
+		setInputs(prev => prev.map(input => ({...input, handleChange: updateInputs})))
 	}, [])
-
-	// const questionInputRef = useRef<HTMLInputElement | null>(null)
-	// const answerInputRef = useRef<HTMLInputElement | null>(null)
-	// const [inputsValues, setInputValues] = useState<{[key:string]: string}>({
-	// 	questionInput: "",
-	// 	answerInput: ""
-	// })
-
-	// const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const name = evt.target.name as string
-	// 	setInputValues(prev => ({
-	// 		...prev,
-	// 		[name]: evt.target.value
-	// 	}))
-	// }
 
 	return (
 		<section>
@@ -74,21 +59,6 @@ export const NewGame = () => {
 						{input.label}
 					</Input>
 				))}
-				{/* <Input
-					ref={questionInputRef}
-					name="questionInput"
-					handleChange={updateInputs}
-				>
-					Type your question:
-				</Input>
-
-				<Input
-					ref={answerInputRef}
-					name="answerInput"
-					handleChange={updateInputs}
-				>
-					Add answer's option:
-				</Input> */}
 			</Form>
 
 			<ButtonsContainer>
