@@ -39,6 +39,18 @@ export const NewGame = () => {
 		}
 	}
 
+	const addNewInput = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		setInputs(prev => [
+			...prev,
+			{
+				label: "",
+				ref: React.createRef<HTMLInputElement | null>(),
+				name: "input" + inputs.length,
+				value: ""
+			}
+		])
+	}
+
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
 	return (
@@ -61,7 +73,7 @@ export const NewGame = () => {
 					GO!
 				</Button>
 
-				<Button variant="inactive" disabled={disabledButtons}>
+				<Button handleClick={addNewInput} variant="inactive" disabled={disabledButtons}>
 					Add another answer option
 				</Button>
 			</ButtonsContainer>
