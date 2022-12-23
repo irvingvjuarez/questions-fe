@@ -2,6 +2,7 @@ import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
+import { ErrorMsg } from "@app/components/ErrorMsg"
 import React, { useEffect, useRef, useState } from "react"
 import { MAX_ANSWERS } from "@app/globals"
 
@@ -14,7 +15,7 @@ type NewGameInput = {
 }
 
 export const NewGame = () => {
-	const errors = []
+	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
 	const [inputs, setInputs] = useState<NewGameInput[]>([
 		{
 			label: "Type your question:",
@@ -43,7 +44,10 @@ export const NewGame = () => {
 
 	const addNewInput = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		if (inputs.length >= MAX_ANSWERS) {
-			errors.push("Four maximum possible answers")
+			setErrorMsgs(prev => [
+				...prev,
+				"Four maximum possible answers"
+			])
 		} else {
 			setInputs(prev => [
 				...prev,
@@ -62,16 +66,26 @@ export const NewGame = () => {
 	return (
 		<section>
 			<Form>
-				{inputs.map(input => (
-					<Input
-						key={input.name}
-						ref={input.ref}
-						name={input.name}
-						handleChange={updateInputs}
-					>
-						{input.label}
-					</Input>
-				))}
+				<>
+					{inputs.map(input => (
+						<Input
+							key={input.name}
+							ref={input.ref}
+							name={input.name}
+							handleChange={updateInputs}
+						>
+							{input.label}
+						</Input>
+					))}
+				</>
+
+				<div className="text-start">
+					{errorMsgs.map(msg =>
+						<ErrorMsg key={msg}>
+							{msg}
+						</ErrorMsg>
+					)}
+				</div>
 			</Form>
 
 			<ButtonsContainer>

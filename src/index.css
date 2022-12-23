@@ -18,6 +18,8 @@
   --option4: #01BCD6;
   --option4-dark: #009FB5;
 
+	--error: #e44d4d;
+
 	--disabled-clear: #959090;
 	--disbaled-dark: #605d5d;
 
@@ -44,4 +46,14 @@ body {
 	background-color: var(--disabled-clear);
 	border: none;
 	color: var(--disbaled-dark);
+}
+
+.error-msg {
+	display: block;
+	padding: 4px;
+	background-color: var(--error);
+	color: var(--white);
+	border-radius: 5px;
+	font-weight: 500;
+	letter-spacing: 1px;
 }
