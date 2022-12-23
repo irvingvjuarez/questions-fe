@@ -2,37 +2,21 @@ import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
-import { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 type NewGameInput = {
 	label: string;
 	ref: React.MutableRefObject<HTMLInputElement | null>;
 	name: string;
-	handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+	handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 }
 
 export const NewGame = () => {
-	let updateInputs: NewGameInput["handleChange"] = undefined;
+	// let updateInputs: NewGameInput["handleChange"] = undefined;
 
-	const [inputs, setInputs] = useState<NewGameInput[]>([
-		{
-			label: "Type your question:",
-			ref: useRef<HTMLInputElement | null>(null),
-			name: "questionInput",
-			handleChange: updateInputs,
-			value: ""
-		},
-		{
-			label: "Add answer's option:",
-			ref: useRef<HTMLInputElement | null>(null),
-			name: "answerInput",
-			handleChange: updateInputs,
-			value: ""
-		}
-	])
-
-	updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
+	const [inputs, setInputs] = useState<NewGameInput[]>([])
+	const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const {name} = evt.target;
 
 		const index = inputs.findIndex(input => input.name == name);
@@ -41,8 +25,26 @@ export const NewGame = () => {
 		newInputs[index].value = evt.target.value
 		setInputs(newInputs)
 	}
-
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
+
+	useEffect(() => {
+		setInputs([
+			{
+				label: "Type your question:",
+				ref: React.createRef<HTMLInputElement | null>(),
+				name: "questionInput",
+				handleChange: updateInputs,
+				value: ""
+			},
+			{
+				label: "Add answer's option:",
+				ref: React.createRef<HTMLInputElement | null>(),
+				name: "answerInput",
+				handleChange: updateInputs,
+				value: ""
+			}
+		])
+	}, [])
 
 	// const questionInputRef = useRef<HTMLInputElement | null>(null)
 	// const answerInputRef = useRef<HTMLInputElement | null>(null)
