@@ -3,6 +3,7 @@ import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import React, { useEffect, useRef, useState } from "react"
+import { MAX_ANSWERS } from "@app/globals"
 
 type NewGameInput = {
 	label: string;
@@ -13,6 +14,7 @@ type NewGameInput = {
 }
 
 export const NewGame = () => {
+	const errors = []
 	const [inputs, setInputs] = useState<NewGameInput[]>([
 		{
 			label: "Type your question:",
@@ -40,15 +42,19 @@ export const NewGame = () => {
 	}
 
 	const addNewInput = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		setInputs(prev => [
-			...prev,
-			{
-				label: "",
-				ref: React.createRef<HTMLInputElement | null>(),
-				name: "input" + inputs.length,
-				value: ""
-			}
-		])
+		if (inputs.length >= MAX_ANSWERS) {
+			errors.push("Four maximum possible answers")
+		} else {
+			setInputs(prev => [
+				...prev,
+				{
+					label: "",
+					ref: React.createRef<HTMLInputElement | null>(),
+					name: "answer" + inputs.length,
+					value: ""
+				}
+			])
+		}
 	}
 
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
