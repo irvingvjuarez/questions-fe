@@ -32,19 +32,14 @@ export const NewGame = () => {
 		const {name} = evt.target;
 		const index = inputs.findIndex(input => input.name == name);
 
-		console.log({ inputs, name })
-
 		if (index >= 0) {
 			const newInputs = [...inputs];
 			newInputs[index].value = evt.target.value;
 			setInputs(newInputs)
 		}
 	}
-	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
-	useEffect(() => {
-		setInputs(prev => prev.map(input => ({...input, handleChange: updateInputs})))
-	}, [])
+	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
 	return (
 		<section>
@@ -54,7 +49,7 @@ export const NewGame = () => {
 						key={input.name}
 						ref={input.ref}
 						name={input.name}
-						handleChange={input.handleChange}
+						handleChange={updateInputs}
 					>
 						{input.label}
 					</Input>
