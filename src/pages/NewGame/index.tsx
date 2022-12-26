@@ -6,6 +6,7 @@ import { ErrorMsg } from "@app/components/ErrorMsg"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { MAX_ANSWERS } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
+import { Questions } from "@app/types"
 
 type NewGameInput = {
 	label: string;
@@ -64,7 +65,8 @@ export const NewGame = () => {
 
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
-	const questionsValue = useContext(questionsContext)
+	const questionsValue = useContext(questionsContext) as Questions
+	const {questions, questionsDispatch} = questionsValue
 
 	const addNewQuestion = () => {
 		console.log({ questionsValue })

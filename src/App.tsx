@@ -15,15 +15,13 @@ function App() {
   return (
 		<BrowserRouter>
 			<Layout>
-					<Routes>
-						<Route index element={<Home />} />
-						<Route path='/game/new' element={
-							<QuestionsProvider value={questionsValue}>
-								<NewGame />
-							</QuestionsProvider>
-						} />
-						<Route path='/game/code' element={<GameCode />} />
-					</Routes>
+					<QuestionsProvider value={questionsValue}>
+						<Routes>
+							<Route index element={<Home />} />
+								<Route path='/game/new' element={<NewGame />} />
+							<Route path='/game/code' element={<GameCode />} />
+						</Routes>
+					</QuestionsProvider>
 			</Layout>
 		</BrowserRouter>
   )
