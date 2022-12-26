@@ -4,13 +4,14 @@ export type User = {
 
 export type Answer = {
 	id: string;
+	content: string;
 }
 
 export type Question = {
 	id: string,
-	question: string,
+	content: string | null,
 	answers: Answer[],
-	correctAnswer: Answer["id"],
+	correctAnswer: Answer["id"] | null,
 	resolved: boolean,
 	answeredBy: User[]
 }

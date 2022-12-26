@@ -6,7 +6,7 @@ import { ErrorMsg } from "@app/components/ErrorMsg"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { MAX_ANSWERS } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
-import { Questions } from "@app/types"
+import { Question, Questions } from "@app/types"
 
 type NewGameInput = {
 	label: string;
@@ -69,7 +69,29 @@ export const NewGame = () => {
 	const {questions, questionsDispatch} = questionsValue
 
 	const addNewQuestion = () => {
-		console.log({ questionsValue })
+		const question: Question = {
+			id: Math.random().toString(12),
+			content: null,
+			answers: [],
+			correctAnswer: null,
+			resolved: false,
+			answeredBy: []
+		}
+
+		inputs.forEach((input, inputIndex) => {
+			if (inputIndex === 0) {
+				question.content = input.value
+			} else {
+				const option = {
+					id: Math.random().toString(12),
+					content: input.value
+				}
+
+				question.answers.push(option)
+			}
+		})
+
+		console.log(question)
 	}
 
 	return (
