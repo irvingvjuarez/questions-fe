@@ -7,6 +7,7 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { MAX_ANSWERS } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
 import { Question, Questions } from "@app/types"
+import { useNavigate } from "react-router-dom"
 
 type NewGameInput = {
 	label: string;
@@ -17,6 +18,7 @@ type NewGameInput = {
 }
 
 export const NewGame = () => {
+	const navigate = useNavigate()
 	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
 	const [inputs, setInputs] = useState<NewGameInput[]>([
 		{
@@ -91,7 +93,7 @@ export const NewGame = () => {
 			}
 		})
 
-		console.log(question)
+		navigate(`/questions/${question.id}/options`)
 	}
 
 	return (

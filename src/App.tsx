@@ -1,6 +1,6 @@
+import './App.css'
 import { useReducer } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
 import { Layout } from './containers/Layout'
 import { GameCode } from './pages/GameCode'
 import { Home } from './pages/Home'
