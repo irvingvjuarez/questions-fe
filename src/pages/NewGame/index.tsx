@@ -4,9 +4,9 @@ import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import { ErrorMsg } from "@app/components/ErrorMsg"
 import React, { useContext, useEffect, useRef, useState } from "react"
-import { MAX_ANSWERS } from "@app/globals"
+import { MAX_ANSWERS, Q_TYPES } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
-import { Question, Questions } from "@app/types"
+import { Action, Question, Questions } from "@app/types"
 import { useNavigate } from "react-router-dom"
 
 type NewGameInput = {
@@ -68,7 +68,7 @@ export const NewGame = () => {
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
 	const questionsValue = useContext(questionsContext) as Questions
-	const {questions, questionsDispatch} = questionsValue
+	const dispatch = questionsValue.questionsDispatch as React.Dispatch<Action>
 
 	const addNewQuestion = () => {
 		const question: Question = {
@@ -92,6 +92,8 @@ export const NewGame = () => {
 				question.answers.push(option)
 			}
 		})
+
+		dispatch({ type: Q_TYPES.addQuestion, payload: question })
 
 		navigate(`/questions/${question.id}/options`)
 	}
