@@ -1,3 +1,5 @@
+import { Button } from "@app/components/Button"
+import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
@@ -44,6 +46,16 @@ export const Options = () => {
 					</li>
 				))}
 			</ul>
+
+			<ButtonsContainer>
+				<Button variant="active">
+					Create Game!
+				</Button>
+
+				<Button variant="inactive">
+					Add another question
+				</Button>
+			</ButtonsContainer>
 		</section>
 	)
 }
