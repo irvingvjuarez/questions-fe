@@ -4,7 +4,7 @@ import { Button } from "@app/components/Button"
 export const Home = () => {
 	return (
 		<main className="h-[76vh] flex flex-col justify-between">
-			<h3 className="text-white tracking-wide text-lg">
+			<h3 className="subtitle">
 				Create questionnaries easily, quickly and for free.
 			</h3>
 

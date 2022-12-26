@@ -32,6 +32,7 @@ body {
 	padding: 25px 0;
   background: var(--background);
 	font-family: "Inter", sans-serif;
+	color: var(--white);
 }
 
 #root {
@@ -56,4 +57,15 @@ body {
 	border-radius: 5px;
 	font-weight: 500;
 	letter-spacing: 1px;
+}
+
+.option:checked + label{
+	background-color: var(--logo);
+	font-weight: bolder;
+	letter-spacing: 1px;
+	border: 2px solid var(--white);
+}
+
+.subtitle {
+	@apply text-white tracking-wide text-lg;
 }
