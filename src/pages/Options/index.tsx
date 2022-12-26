@@ -2,15 +2,24 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const Options = () => {
 	const navigate = useNavigate()
+	const [isChecked, setIsChecked] = useState(false)
 
 	const {questionId} = useParams()
 	const {questions} = useContext(questionsContext) as Questions
 	const currentQuestion = questions.find(question => question.id == questionId)
+
+	const handleChecked = (evt: React.ChangeEvent<HTMLInputElement>) => {
+		const isInputChecked = evt.target.checked;
+
+		if (isInputChecked && !isChecked) {
+			setIsChecked(true)
+		}
+	}
 
 	useEffect(() => {
 		if (!currentQuestion) {
@@ -37,6 +46,7 @@ export const Options = () => {
 							type="radio"
 							name={currentQuestion.content || ""}
 							id={id}
+							onChange={handleChecked}
 							hidden
 						/>
 
@@ -48,11 +58,11 @@ export const Options = () => {
 			</ul>
 
 			<ButtonsContainer>
-				<Button variant="active">
+				<Button variant="active" disabled={!isChecked}>
 					Create Game!
 				</Button>
 
-				<Button variant="inactive">
+				<Button variant="inactive" disabled={!isChecked}>
 					Add another question
 				</Button>
 			</ButtonsContainer>
