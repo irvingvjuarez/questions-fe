@@ -26,6 +26,7 @@ function App() {
 							<Route path='/game/new' element={<NewGame />} />
 							<Route path='/game/code' element={<GameCode />} />
 							<Route path='/questions/:questionId/options' element={<Options />} />
+							<Route path='/game/questions/new' element={<NewGame />} />
 						</Routes>
 					</QuestionsProvider>
 			</Layout>

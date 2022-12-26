@@ -26,6 +26,10 @@ export const Options = () => {
 				questionIndex: currentQuestionIndex
 			}
 		});
+
+		console.log(questions)
+
+		navigate(`/game/questions/new`)
 	}
 
 	const handleChecked = (evt: React.ChangeEvent<HTMLInputElement>, id: string) => {
