@@ -29,3 +29,9 @@ export type Action = {
 	type: Q_TYPES;
 	payload: unknown;
 }
+
+export type OptionPayload = {
+	questionId: string;
+	optionId: string;
+	questionIndex: number;
+}

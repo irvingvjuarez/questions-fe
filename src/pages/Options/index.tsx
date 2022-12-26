@@ -1,23 +1,38 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
-import { Questions } from "@app/types"
+import { Q_TYPES } from "@app/globals"
+import { Action, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const Options = () => {
 	const navigate = useNavigate()
-	const [isChecked, setIsChecked] = useState(false)
+	const [correctOptionID, setCorrectOptionID] = useState<string | null>(null)
 
 	const {questionId} = useParams()
-	const {questions} = useContext(questionsContext) as Questions
-	const currentQuestion = questions.find(question => question.id == questionId)
+	const {questions, questionsDispatch} = useContext(questionsContext) as Questions
+	const dispatch = questionsDispatch as React.Dispatch<Action>
 
-	const handleChecked = (evt: React.ChangeEvent<HTMLInputElement>) => {
+	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
+	const currentQuestion = questions[currentQuestionIndex]
+
+	const addCorrectOption = () => {
+		dispatch({
+			type: Q_TYPES.addCorrectOption,
+			payload: {
+				questionId: currentQuestion.id,
+				optionId: correctOptionID,
+				questionIndex: currentQuestionIndex
+			}
+		});
+	}
+
+	const handleChecked = (evt: React.ChangeEvent<HTMLInputElement>, id: string) => {
 		const isInputChecked = evt.target.checked;
 
-		if (isInputChecked && !isChecked) {
-			setIsChecked(true)
+		if (isInputChecked && !correctOptionID) {
+			setCorrectOptionID(id)
 		}
 	}
 
@@ -46,7 +61,7 @@ export const Options = () => {
 							type="radio"
 							name={currentQuestion.content || ""}
 							id={id}
-							onChange={handleChecked}
+							onChange={e => handleChecked(e, id)}
 							hidden
 						/>
 
@@ -58,11 +73,15 @@ export const Options = () => {
 			</ul>
 
 			<ButtonsContainer>
-				<Button variant="active" disabled={!isChecked}>
+				<Button variant="active" disabled={!correctOptionID}>
 					Create Game!
 				</Button>
 
-				<Button variant="inactive" disabled={!isChecked}>
+				<Button
+					variant="inactive"
+					disabled={!correctOptionID}
+					handleClick={addCorrectOption}
+				>
 					Add another question
 				</Button>
 			</ButtonsContainer>
