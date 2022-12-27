@@ -24,6 +24,7 @@ export const Options = () => {
 				'Content-Type': 'application/json'
 			},
 			method: "POST",
+			body: JSON.stringify({ questions })
 		}
 
 		fetch(API_ROOT + "/game/create", fetchConfig)
