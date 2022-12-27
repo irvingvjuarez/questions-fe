@@ -1,7 +1,7 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
-import { Q_TYPES } from "@app/globals"
+import { API_ROOT, Q_TYPES } from "@app/globals"
 import { Action, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -16,6 +16,20 @@ export const Options = () => {
 
 	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
 	const currentQuestion = questions[currentQuestionIndex]
+
+	const createGame = () => {
+		const fetchConfig = {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: "POST",
+		}
+
+		fetch(API_ROOT + "/game/create", fetchConfig)
+			.then(res => res.json())
+			.then(data => console.log({ data }))
+	}
 
 	const addCorrectOption = () => {
 		dispatch({
@@ -77,7 +91,11 @@ export const Options = () => {
 			</ul>
 
 			<ButtonsContainer>
-				<Button variant="active" disabled={!correctOptionID}>
+				<Button
+					variant="active"
+					disabled={!correctOptionID}
+					handleClick={createGame}
+				>
 					Create Game!
 				</Button>
 
