@@ -91,7 +91,11 @@ export const Options = () => {
 							hidden
 						/>
 
-						<label htmlFor={id} className="block w-full py-2 h-[inherit] rounded-lg">
+						<label
+							tabIndex={-1}
+							htmlFor={id}
+							className="block w-full py-2 h-[inherit] rounded-lg"
+						>
 							{content}
 						</label>
 					</li>

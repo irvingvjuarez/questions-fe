@@ -26,8 +26,6 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				gameCode: action.payload as number
 			}
 
-			console.log({ newState })
-
 			return newState
 		default:
 			return state

@@ -6,15 +6,24 @@ import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
 	const navigate = useNavigate()
-	const questionsValue = useContext(questionsContext) as Questions
+	const { gameCode: contextGameCode } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams()
 
 	useEffect(() => {
-		console.log({ questionsValue })
+		if (Number(paramGameCode) !== contextGameCode) {
+			navigate("/")
+		}
 	}, [])
 
 	return (
 		<section>
-			<h2>I am the GameRoom page</h2>
+			<h2 className="subtitle">
+				Share the following code:
+			</h2>
+
+			<span>
+				{paramGameCode}
+			</span>
 		</section>
 	)
 }
