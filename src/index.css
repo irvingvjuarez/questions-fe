@@ -69,3 +69,7 @@ body {
 .subtitle {
 	@apply text-white tracking-wide text-lg;
 }
+
+.highlighted {
+	@apply underline tracking-wide font-semibold px-4;
+}

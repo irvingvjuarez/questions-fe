@@ -17,10 +17,6 @@ export const Options = () => {
 	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
 	const currentQuestion = questions[currentQuestionIndex]
 
-	const addGameCode = (gameCode: number) => {
-		dispatch({ type: Q_TYPES.addGameCode, payload: gameCode });
-	}
-
 	const createGame = () => {
 		const fetchConfig = {
 			headers: {
@@ -36,7 +32,7 @@ export const Options = () => {
 			.then(data => {
 				const { gameCode } = data
 
-				addGameCode(gameCode)
+				dispatch({ type: Q_TYPES.addGameCode, payload: gameCode });
 				navigate(`/game/${gameCode}/room`)
 			})
 	}
@@ -75,7 +71,7 @@ export const Options = () => {
 				Choose the correct option for the following question:
 			</h2>
 
-			<span className="underline tracking-wide font-semibold px-4">
+			<span className="highlighted">
 				{currentQuestion?.content}
 			</span>
 

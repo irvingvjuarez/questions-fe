@@ -1,3 +1,5 @@
+import { Q_TYPES } from "./globals.ts";
+
 // TYPES THAT WORK AS CLASSES IN THE BACKEND
 export type User = {
 	nickname: string;
@@ -28,7 +30,7 @@ export type Questions = {
 // TYPES THAT WORK WITHIN THE FRONTEND ONLY
 export type Action = {
 	type: Q_TYPES;
-	payload: unknown;
+	payload?: unknown;
 }
 
 export type OptionPayload = {

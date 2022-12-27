@@ -21,7 +21,7 @@ export const GameRoom = () => {
 				Share the following code:
 			</h2>
 
-			<span>
+			<span className="highlighted">
 				{paramGameCode}
 			</span>
 		</section>

@@ -1,7 +1,18 @@
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
+import { useContext, useEffect } from "react"
+import { questionsContext } from "@app/contexts/questions.context"
+import { Action, Questions } from "@app/types"
+import { Q_TYPES } from "@app/globals"
 
 export const Home = () => {
+	const { questionsDispatch } = useContext(questionsContext) as Questions;
+	const dispatch = questionsDispatch as React.Dispatch<Action>
+
+	useEffect(() => {
+		dispatch({ type: Q_TYPES.clearQuestions })
+	}, [])
+
 	return (
 		<main className="h-[76vh] flex flex-col justify-between">
 			<h3 className="subtitle">

@@ -5,6 +5,11 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.clearQuestions:
+			return {
+				...state,
+				questions: []
+			}
 		case Q_TYPES.addQuestion:
 			const newQuestion = action.payload as Question
 			return {

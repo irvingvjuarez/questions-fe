@@ -7,5 +7,6 @@ export const API_ROOT = "http://localhost:3000"
 export enum Q_TYPES {
 	addQuestion,
 	addCorrectOption,
-	addGameCode
+	addGameCode,
+	clearQuestions,
 }
