@@ -12,11 +12,11 @@ import { Action, Questions } from './types'
 import { GameRoom } from './pages/GameRoom'
 
 function App() {
-	const initialState: Omit<Questions, "questionsDispatch"> = { questions: [] }
+	const initialState: Omit<Questions, "questionsDispatch"> = { questions: [], gameCode: null }
 
 	// @ts-ignore
 	const [questions, questionsDispatch] = useReducer(questionsReducer, initialState);
-	const questionsValue = { ...questions, questionsDispatch, gameCode: null }
+	const questionsValue = { ...questions, questionsDispatch }
 
   return (
 		<BrowserRouter>

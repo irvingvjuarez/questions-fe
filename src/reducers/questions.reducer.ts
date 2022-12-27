@@ -21,12 +21,14 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				questions: newQuestions
 			}
 		case Q_TYPES.addGameCode:
-			const gameCode = action.payload as number
-
-			return {
+			const newState = {
 				...state,
-				gameCode
+				gameCode: action.payload as number
 			}
+
+			console.log({ newState })
+
+			return newState
 		default:
 			return state
 	}

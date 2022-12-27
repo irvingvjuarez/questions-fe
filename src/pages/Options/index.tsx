@@ -17,6 +17,10 @@ export const Options = () => {
 	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
 	const currentQuestion = questions[currentQuestionIndex]
 
+	const addGameCode = (gameCode: number) => {
+		dispatch({ type: Q_TYPES.addGameCode, payload: gameCode });
+	}
+
 	const createGame = () => {
 		const fetchConfig = {
 			headers: {
@@ -30,9 +34,10 @@ export const Options = () => {
 		fetch(API_ROOT + "/game/create", fetchConfig)
 			.then(res => res.json())
 			.then(data => {
-				dispatch({ type: Q_TYPES.addGameCode, payload: data.gameCode });
+				const { gameCode } = data
 
-				navigate(`/game/${data.gameCode}/room`)
+				addGameCode(gameCode)
+				navigate(`/game/${gameCode}/room`)
 			})
 	}
 
