@@ -18,6 +18,7 @@ export type Question = {
 }
 
 export type Questions = {
+	gameCode: null | number,
 	questions: Question[],
 	questionsDispatch(): void
 }

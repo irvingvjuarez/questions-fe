@@ -29,7 +29,11 @@ export const Options = () => {
 
 		fetch(API_ROOT + "/game/create", fetchConfig)
 			.then(res => res.json())
-			.then(data => console.log({ data }))
+			.then(data => {
+				dispatch({ type: Q_TYPES.addGameCode, payload: data.gameCode });
+
+				navigate(`/game/${data.gameCode}/room`)
+			})
 	}
 
 	const addCorrectOption = () => {
@@ -41,8 +45,6 @@ export const Options = () => {
 				questionIndex: currentQuestionIndex
 			}
 		});
-
-		console.log(questions)
 
 		navigate(`/game/questions/new`)
 	}

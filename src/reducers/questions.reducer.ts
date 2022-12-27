@@ -20,6 +20,13 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				...state,
 				questions: newQuestions
 			}
+		case Q_TYPES.addGameCode:
+			const gameCode = action.payload as number
+
+			return {
+				...state,
+				gameCode
+			}
 		default:
 			return state
 	}
