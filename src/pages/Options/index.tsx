@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom"
 export const Options = () => {
 	const navigate = useNavigate()
 	const [correctOptionID, setCorrectOptionID] = useState<string | null>(null)
+	const [hoveredOption, setHoveredOption] = useState<null | string>(null)
 
 	const {questionId} = useParams()
 	const {questions, questionsDispatch} = useContext(questionsContext) as Questions
@@ -16,6 +17,20 @@ export const Options = () => {
 
 	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
 	const currentQuestion = questions[currentQuestionIndex]
+
+	const chooseKeyboardController = (evt: KeyboardEvent) => {
+		const keyboardKey = evt.key
+
+		if (keyboardKey == "Enter" || keyboardKey == " ") {
+			if (hoveredOption) {
+				const allLabels = [...document.querySelectorAll("label")]
+				const hoveredLabel = allLabels.find(label => label.htmlFor == hoveredOption)
+
+				hoveredLabel?.click();
+				setHoveredOption(null)
+			}
+		}
+	}
 
 	const createGame = () => {
 		const fetchConfig = {
@@ -58,10 +73,22 @@ export const Options = () => {
 		}
 	}
 
+	const hoverOption = (evt: React.FocusEvent<HTMLLabelElement, Element>) => {
+		const optionId = evt.target.htmlFor
+
+		setHoveredOption(optionId)
+	}
+
 	useEffect(() => {
+		document.addEventListener("keypress", chooseKeyboardController);
+
 		if (!currentQuestion) {
 			// TODO: send to a 404 page
 			navigate("/")
+		}
+
+		return () => {
+			document.removeEventListener("keypress", chooseKeyboardController);
 		}
 	}, [])
 
@@ -76,7 +103,7 @@ export const Options = () => {
 			</span>
 
 			<ul className="my-4 p-3 flex flex-col space-y-3">
-				{currentQuestion?.answers.map(({ id, content }) => (
+				{currentQuestion?.answers.map(({ id, content }, index) => (
 					<li key={id} className="rounded-lg bg-background-dark">
 						<input
 							className="option"
@@ -88,9 +115,10 @@ export const Options = () => {
 						/>
 
 						<label
-							tabIndex={-1}
+							tabIndex={index + 1}
 							htmlFor={id}
 							className="block w-full py-2 h-[inherit] rounded-lg"
+							onFocus={hoverOption}
 						>
 							{content}
 						</label>
