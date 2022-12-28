@@ -15,7 +15,8 @@ function App() {
 	const initialState: Omit<Questions, "questionsDispatch"> = {
 		questions: [],
 		gameCode: null,
-		gameUsers: []
+		gameUsers: [],
+		isUser: false
 	}
 
 	// @ts-ignore

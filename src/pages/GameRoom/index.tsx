@@ -8,10 +8,8 @@ import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
 	const navigate = useNavigate()
-	const { gameCode: contextGameCode, gameUsers = [], questions } = useContext(questionsContext) as Questions
-	const { gameCode: paramGameCode } = useParams()
-
-	console.log({gameUsers, questions, contextGameCode})
+	const { gameCode: contextGameCode, gameUsers = [], questions, isUser } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams();
 
 	useEffect(() => {
 		if (Number(paramGameCode) !== contextGameCode) {
@@ -21,13 +19,21 @@ export const GameRoom = () => {
 
 	return (
 		<section>
-			<h2 className="subtitle">
-				Share the following code:
-			</h2>
+			{isUser ? (
+				<h2 className="subtitle">
+					Waiting the owner to start the game...
+				</h2>
+			) : (
+				<>
+					<h2 className="subtitle">
+						Share the following code:
+					</h2>
 
-			<span className="highlighted">
-				{paramGameCode}
-			</span>
+					<span className="highlighted">
+						{paramGameCode}
+					</span>
+				</>
+			)}
 
 			<article className="border-2 border-white w-[90%] mx-auto h-[60vh] my-3 flex justify-center items-center p-3">
 				{gameUsers.length < 1 ? (
@@ -48,11 +54,13 @@ export const GameRoom = () => {
 				)}
 			</article>
 
-			<ButtonsContainer>
-				<Button variant="active">
-					Start Game!
-				</Button>
-			</ButtonsContainer>
+			{!isUser && (
+				<ButtonsContainer>
+					<Button variant="active">
+						Start Game!
+					</Button>
+				</ButtonsContainer>
+			)}
 		</section>
 	)
 }

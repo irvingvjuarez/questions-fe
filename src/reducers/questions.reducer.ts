@@ -37,7 +37,8 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				...state,
 				questions,
 				gameUsers,
-				gameCode: Number(gameCode)
+				gameCode: Number(gameCode),
+				isUser: true
 			}
 		default:
 			return state
