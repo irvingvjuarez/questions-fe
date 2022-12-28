@@ -32,11 +32,9 @@ export const GameCode = () => {
 		fetch(API_ROOT + `/user/${gameCode}/join`, fetchConfig)
 			.then(res => {
 				if (res.status === 404) {
-					setErrorMsgs(prev => [
-						...prev,
-						`Game code ${gameCode} doesn't exist.`
-					])
+					throw new Error(`Game code ${gameCode} doesn't exist.`)
 				} else if (res.ok) {
+					setErrorMsgs([])
 					return res.json()
 				}
 			})
@@ -44,7 +42,10 @@ export const GameCode = () => {
 				console.log({ data })
 			})
 			.catch(err => {
-				console.log({ err })
+				setErrorMsgs(prev => [
+					...prev,
+					err.message
+				]);
 			})
 	}
 
