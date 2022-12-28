@@ -2,12 +2,12 @@ import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
-import { ErrorMsg } from "@app/components/ErrorMsg"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useContext, useState } from "react"
 import { MAX_ANSWERS, Q_TYPES } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
 import { Action, Question, Questions } from "@app/types"
 import { useNavigate } from "react-router-dom"
+import { ErrorMsgList } from "@app/containers/ErrorMsgList"
 
 type NewGameInput = {
 	label: string;
@@ -114,13 +114,7 @@ export const NewGame = () => {
 					))}
 				</>
 
-				<div className="text-start">
-					{errorMsgs.map(msg =>
-						<ErrorMsg key={msg}>
-							{msg}
-						</ErrorMsg>
-					)}
-				</div>
+				<ErrorMsgList list={errorMsgs} />
 			</Form>
 
 			<ButtonsContainer>
