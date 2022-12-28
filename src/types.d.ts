@@ -43,4 +43,5 @@ export type OptionPayload = {
 export type UserJoinsPayload = {
 	questions: Question[];
 	gameUsers: User[];
+	gameCode: string;
 }

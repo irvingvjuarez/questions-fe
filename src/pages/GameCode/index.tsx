@@ -46,8 +46,8 @@ export const GameCode = () => {
 				}
 			})
 			.then(data => {
-				const {gameQuestions: questions, gameUsers} = data;
-				const payload = {questions, gameUsers}
+				const {gameQuestions: questions, gameUsers, gameCode} = data;
+				const payload = {questions, gameUsers, gameCode}
 
 				dispatch({ type: Q_TYPES.userJoins, payload });
 				navigate(`/game/${gameCode}/room`)

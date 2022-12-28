@@ -35,13 +35,16 @@ export const GameRoom = () => {
 						This game room is currently empty.
 					</span>
 				) : (
-					<>
+					<div className="w-full flex h-[inherit] py-2 space-x-1">
 						{gameUsers.map(user => (
-							<span>
+							<span
+								key={user.nickname}
+								className="bg-white text-background-dark font-semibold p-1 rounded-xl h-fit"
+							>
 								{user.nickname}
 							</span>
 						))}
-					</>
+					</div>
 				)}
 			</article>
 
