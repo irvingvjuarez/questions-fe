@@ -34,7 +34,7 @@ export const GameCode = () => {
 				if (res.status === 404) {
 					setErrorMsgs(prev => [
 						...prev,
-						`Game code ${gameCode} is probably wrong.`
+						`Game code ${gameCode} doesn't exist.`
 					])
 				} else if (res.ok) {
 					return res.json()
@@ -64,7 +64,10 @@ export const GameCode = () => {
 				</Input>
 			</Form>
 
-			<ErrorMsgList list={errorMsgs}/>
+			<ErrorMsgList
+				className="min-w-[300px] w-[90%] mx-auto my-4"
+				list={errorMsgs}
+			/>
 
 			<ButtonsContainer>
 				<Button
