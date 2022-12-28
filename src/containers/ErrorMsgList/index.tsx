@@ -5,6 +5,10 @@ type ErrorMsgListProps = {
 }
 
 export const ErrorMsgList: React.FC<ErrorMsgListProps> = ({ list }) => {
+	if (list.length === 0) {
+		return null;
+	}
+
 	return (
 		<div className="text-start">
 			{list.map(msg =>

@@ -4,10 +4,12 @@ import { Input } from "@app/components/Input"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
 import { API_ROOT } from "@app/globals"
+import { ErrorMsgList } from "@app/containers/ErrorMsgList";
 
 export const GameCode = () => {
 	const [nickname, setNickname] = useState("")
 	const [gameCode, setGameCode] = useState<null | number>(null)
+	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
 
 	const changeNickname = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		setNickname(evt.target.value)
@@ -30,8 +32,10 @@ export const GameCode = () => {
 		fetch(API_ROOT + `/user/${gameCode}/join`, fetchConfig)
 			.then(res => {
 				if (res.status === 404) {
-					// Handling the error of game code not found
-					console.log("Game not found")
+					setErrorMsgs(prev => [
+						...prev,
+						`Game code ${gameCode} is probably wrong.`
+					])
 				} else if (res.ok) {
 					return res.json()
 				}
@@ -59,6 +63,8 @@ export const GameCode = () => {
 					Enter your nickname:
 				</Input>
 			</Form>
+
+			<ErrorMsgList list={errorMsgs}/>
 
 			<ButtonsContainer>
 				<Button
