@@ -1,5 +1,5 @@
 import './App.css'
-import { Reducer, useReducer } from 'react'
+import { useReducer } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Layout } from './containers/Layout'
 import { GameCode } from './pages/GameCode'
@@ -8,11 +8,15 @@ import { NewGame } from './pages/NewGame'
 import { questionsReducer } from "@app/reducers/questions.reducer"
 import { QuestionsProvider } from "@app/contexts/questions.context"
 import { Options } from './pages/Options'
-import { Action, Questions } from './types'
+import { Questions } from './types'
 import { GameRoom } from './pages/GameRoom'
 
 function App() {
-	const initialState: Omit<Questions, "questionsDispatch"> = { questions: [], gameCode: null }
+	const initialState: Omit<Questions, "questionsDispatch"> = {
+		questions: [],
+		gameCode: null,
+		gameUsers: []
+	}
 
 	// @ts-ignore
 	const [questions, questionsDispatch] = useReducer(questionsReducer, initialState);

@@ -22,7 +22,8 @@ export type Question = {
 export type Questions = {
 	gameCode: null | number,
 	questions: Question[],
-	questionsDispatch(): void
+	questionsDispatch(): void,
+	gameUsers: User[]
 }
 
 
@@ -37,4 +38,9 @@ export type OptionPayload = {
 	questionId: string;
 	optionId: string;
 	questionIndex: number;
+}
+
+export type UserJoinsPayload = {
+	questions: Question[];
+	gameUsers: User[];
 }

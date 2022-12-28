@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
-import { API_ROOT } from "@app/globals"
+import { API_ROOT, Q_TYPES } from "@app/globals"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList";
+import { questionsContext } from "@app/contexts/questions.context";
+import { Action, Questions } from "@app/types";
+import { useNavigate } from "react-router-dom";
 
 export const GameCode = () => {
 	const [nickname, setNickname] = useState("")
 	const [gameCode, setGameCode] = useState<null | number>(null)
 	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
+
+	const navigate = useNavigate();
+	const { questionsDispatch } = useContext(questionsContext) as Questions;
+	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const changeNickname = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		setNickname(evt.target.value)
@@ -39,7 +46,11 @@ export const GameCode = () => {
 				}
 			})
 			.then(data => {
-				console.log({ data })
+				const {gameQuestions: questions, gameUsers} = data;
+				const payload = {questions, gameUsers}
+
+				dispatch({ type: Q_TYPES.userJoins, payload });
+				navigate(`/game/${gameCode}/room`)
 			})
 			.catch(err => {
 				setErrorMsgs(prev => [

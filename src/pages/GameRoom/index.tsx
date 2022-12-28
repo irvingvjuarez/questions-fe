@@ -7,11 +7,11 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
-	const [currentUsers, setCurrentUsers] = useState<User[]>([])
-
 	const navigate = useNavigate()
-	const { gameCode: contextGameCode } = useContext(questionsContext) as Questions
+	const { gameCode: contextGameCode, gameUsers = [], questions } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams()
+
+	console.log({gameUsers, questions, contextGameCode})
 
 	useEffect(() => {
 		if (Number(paramGameCode) !== contextGameCode) {
@@ -30,13 +30,13 @@ export const GameRoom = () => {
 			</span>
 
 			<article className="border-2 border-white w-[90%] mx-auto h-[60vh] my-3 flex justify-center items-center p-3">
-				{currentUsers.length < 1 ? (
+				{gameUsers.length < 1 ? (
 					<span>
 						This game room is currently empty.
 					</span>
 				) : (
 					<>
-						{currentUsers.map(user => (
+						{gameUsers.map(user => (
 							<span>
 								{user.nickname}
 							</span>
