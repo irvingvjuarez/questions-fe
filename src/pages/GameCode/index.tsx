@@ -42,7 +42,11 @@ export const GameCode = () => {
 	return (
 		<section>
 			<Form>
-				<Input ref={gameCodeRef}>
+				<Input
+					ref={gameCodeRef}
+					type="number"
+					placeholder="Eg. 3392"
+				>
 					Enter the game code:
 				</Input>
 
