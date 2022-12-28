@@ -66,10 +66,14 @@ body {
 	border: 2px solid var(--white);
 }
 
+.page-container {
+	@apply w-[90%] max-w-lg mx-auto;
+}
+
 .subtitle {
-	@apply text-white tracking-wide text-lg;
+	@apply text-white tracking-wide text-lg sm:text-xl;
 }
 
 .highlighted {
-	@apply underline tracking-wide font-semibold px-4;
+	@apply underline tracking-wide font-semibold px-4 sm:text-lg;
 }

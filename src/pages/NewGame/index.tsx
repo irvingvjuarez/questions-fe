@@ -99,7 +99,7 @@ export const NewGame = () => {
 	}
 
 	return (
-		<section>
+		<section className="page-container">
 			<Form>
 				<>
 					{inputs.map(input => (

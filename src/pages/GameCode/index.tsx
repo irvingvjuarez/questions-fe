@@ -50,7 +50,7 @@ export const GameCode = () => {
 	}
 
 	return (
-		<section>
+		<section className="page-container">
 			<Form>
 				<Input
 					type="number"
