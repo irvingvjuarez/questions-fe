@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState } from "react";
 import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
@@ -6,13 +6,18 @@ import { Button } from "@app/components/Button"
 import { API_ROOT } from "@app/globals"
 
 export const GameCode = () => {
-	const nicknameRef = useRef<HTMLInputElement | null>(null)
-	const gameCodeRef = useRef<HTMLInputElement | null>(null)
+	const [nickname, setNickname] = useState("")
+	const [gameCode, setGameCode] = useState<null | number>(null)
+
+	const changeNickname = (evt: React.ChangeEvent<HTMLInputElement>) => {
+		setNickname(evt.target.value)
+	}
+	const changeGameCode = (evt: React.ChangeEvent<HTMLInputElement>) => {
+		setGameCode(Number(evt.target.value))
+	}
+	const bothInputsFilled = nickname && gameCode;
 
 	const enterGame = () => {
-		const nickname = nicknameRef.current ? nicknameRef.current.value : ""
-		const gameCode = gameCodeRef.current ? gameCodeRef.current.value : null
-
 		const fetchConfig = {
 			headers: {
 				'Accept': 'application/json',
@@ -43,14 +48,14 @@ export const GameCode = () => {
 		<section>
 			<Form>
 				<Input
-					ref={gameCodeRef}
 					type="number"
 					placeholder="Eg. 3392"
+					handleChange={changeGameCode}
 				>
 					Enter the game code:
 				</Input>
 
-				<Input ref={nicknameRef}>
+				<Input handleChange={changeNickname}>
 					Enter your nickname:
 				</Input>
 			</Form>
@@ -59,6 +64,7 @@ export const GameCode = () => {
 				<Button
 					variant="active"
 					handleClick={enterGame}
+					disabled={!bothInputsFilled}
 				>
 					Enter to the Game!
 				</Button>
