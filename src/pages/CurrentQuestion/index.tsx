@@ -1,10 +1,20 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 export const CurrentQuestion = () => {
-	const { questions } = useContext(questionsContext) as Questions
+	const navigate = useNavigate()
+
+	const { questions, gameCode } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams()
 	const currentQuestion = questions[0]
+
+	useEffect(() => {
+		if (gameCode !== Number(paramGameCode)) {
+			navigate("/")
+		}
+	}, [])
 
 	return (
 		<section>

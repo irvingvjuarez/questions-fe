@@ -28,7 +28,7 @@ export const GameRoom = () => {
 				}))
 
 				if (data.gameStarted) {
-					navigate("/game/on/current/question")
+					navigate(`/game/${contextGameCode}/current/question`)
 				}
 
 				setCurrentUsers(newUsers)
@@ -49,7 +49,7 @@ export const GameRoom = () => {
 			.then(data => {
 				if (data.game.started) {
 					clearInterval(getUsersInterval)
-					navigate("/game/on/current/question");
+					navigate(`/game/${contextGameCode}/current/question`);
 				}
 			})
 	}
