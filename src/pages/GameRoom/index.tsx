@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
+	let getUsersInterval
+
 	const navigate = useNavigate()
 	const { gameCode: contextGameCode, gameUsers = [], user } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams();
@@ -25,6 +27,10 @@ export const GameRoom = () => {
 					nickname: user.nickname
 				}))
 
+				if (data.gameStarted) {
+					navigate("/game/on/current/question")
+				}
+
 				setCurrentUsers(newUsers)
 			})
 	}
@@ -33,7 +39,7 @@ export const GameRoom = () => {
 		if (Number(paramGameCode) !== contextGameCode) {
 			navigate("/")
 		} else {
-			const getUsersInterval = setInterval(fetchUsers, 1000)
+			getUsersInterval = setInterval(fetchUsers, 1000)
 		}
 	}, [])
 
@@ -76,7 +82,11 @@ export const GameRoom = () => {
 
 			{!user.isUser && (
 				<ButtonsContainer>
-					<Button variant="active">
+					<Button
+						variant="active"
+						linkUrl="/game/on/current/question"
+						disabled={currentUsers.length > 0}
+					>
 						Start Game!
 					</Button>
 				</ButtonsContainer>
