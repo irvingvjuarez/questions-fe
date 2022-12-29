@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
-	let getUsersInterval
+	let getUsersInterval: number
 
 	const navigate = useNavigate()
 	const { gameCode: contextGameCode, gameUsers = [], user } = useContext(questionsContext) as Questions
@@ -32,6 +32,25 @@ export const GameRoom = () => {
 				}
 
 				setCurrentUsers(newUsers)
+			})
+	}
+
+	const startGame = () => {
+		const fetchConfig = {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: "POST"
+		}
+
+		fetch(API_ROOT + `/game/${contextGameCode}/start`, fetchConfig)
+			.then(res => res.json())
+			.then(data => {
+				if (data.game.started) {
+					clearInterval(getUsersInterval)
+					navigate("/game/on/current/question");
+				}
 			})
 	}
 
@@ -84,8 +103,8 @@ export const GameRoom = () => {
 				<ButtonsContainer>
 					<Button
 						variant="active"
-						linkUrl="/game/on/current/question"
-						disabled={currentUsers.length > 0}
+						handleClick={startGame}
+						disabled={currentUsers.length < 1}
 					>
 						Start Game!
 					</Button>
