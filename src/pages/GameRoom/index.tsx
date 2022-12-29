@@ -14,7 +14,11 @@ export const GameRoom = () => {
 	const [currentUsers, setCurrentUsers] = useState<User[]>(gameUsers)
 
 	const fetchUsers = () => {
-		fetch(API_ROOT + `/game/${contextGameCode}/users`)
+		const apiTail = user.isUser
+			? `/game/${contextGameCode}/users/${user.nickname}`
+			: `/game/${contextGameCode}/users`;
+
+		fetch(API_ROOT + apiTail)
 			.then(res => res.json())
 			.then(data => {
 				const newUsers = data.users.map((user: User) => ({
