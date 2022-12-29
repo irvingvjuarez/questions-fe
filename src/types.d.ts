@@ -24,7 +24,10 @@ export type Questions = {
 	questions: Question[],
 	questionsDispatch(): void,
 	gameUsers: User[],
-	isUser: boolean
+	user: {
+		isUser: boolean,
+		nickname: string
+	}
 }
 
 
@@ -45,4 +48,5 @@ export type UserJoinsPayload = {
 	questions: Question[];
 	gameUsers: User[];
 	gameCode: string;
+	nickname: string;
 }

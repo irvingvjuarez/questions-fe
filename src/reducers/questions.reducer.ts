@@ -31,14 +31,17 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				gameCode: action.payload as number
 			}
 		case Q_TYPES.userJoins:
-			const { questions, gameUsers, gameCode } = action.payload as UserJoinsPayload
+			const { questions, gameUsers, gameCode, nickname } = action.payload as UserJoinsPayload
 
 			return {
 				...state,
 				questions,
 				gameUsers,
 				gameCode: Number(gameCode),
-				isUser: true
+				user: {
+					isUser: true,
+					nickname
+				}
 			}
 		default:
 			return state

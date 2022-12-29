@@ -16,7 +16,10 @@ function App() {
 		questions: [],
 		gameCode: null,
 		gameUsers: [],
-		isUser: false
+		user: {
+			isUser: false,
+			nickname: ""
+		}
 	}
 
 	// @ts-ignore

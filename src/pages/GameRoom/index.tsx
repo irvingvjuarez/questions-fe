@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
 	const navigate = useNavigate()
-	const { gameCode: contextGameCode, gameUsers = [], questions, isUser } = useContext(questionsContext) as Questions
+	const { gameCode: contextGameCode, gameUsers = [], user } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams();
 
 	const [currentUsers, setCurrentUsers] = useState<User[]>(gameUsers)
@@ -35,7 +35,7 @@ export const GameRoom = () => {
 
 	return (
 		<section>
-			{isUser ? (
+			{user.isUser ? (
 				<h2 className="subtitle">
 					Waiting the owner to start the game...
 				</h2>
@@ -70,7 +70,7 @@ export const GameRoom = () => {
 				)}
 			</article>
 
-			{!isUser && (
+			{!user.isUser && (
 				<ButtonsContainer>
 					<Button variant="active">
 						Start Game!
