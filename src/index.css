@@ -77,3 +77,19 @@ body {
 .highlighted {
 	@apply underline tracking-wide font-semibold px-4 sm:text-lg;
 }
+
+.option-0 {
+	background-color: var(--option1);
+}
+
+.option-1 {
+	background-color: var(--option2);
+}
+
+.option-2 {
+	background-color: var(--option3-dark);
+}
+
+.option-3 {
+	background-color: var(--option4-dark);
+}
