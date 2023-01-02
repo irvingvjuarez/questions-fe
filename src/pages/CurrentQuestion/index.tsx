@@ -14,7 +14,7 @@ export const CurrentQuestion = () => {
 	const navigate = useNavigate()
 	let fetchStatusInterval: number
 
-	const { gameCode, questionsDispatch } = useContext(questionsContext) as Questions
+	const { gameCode, questionsDispatch, user } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams()
 	const dispatch = questionsDispatch as React.Dispatch<Action>
 
@@ -38,7 +38,7 @@ export const CurrentQuestion = () => {
 				throw new Error()
 			})
 			.then(data => {
-				console.log({ data })
+				// console.log({ data })
 
 				if (data.status.counterActive === false) {
 					dispatch({
@@ -78,17 +78,18 @@ export const CurrentQuestion = () => {
 				{currentQuestion?.answers.map((answer, answerIndex) => (
 					<div
 						key={answer.id}
-						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg`}
+						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg ${user.isUser && "flex items-center justify-center"}`}
 					>
 						<img
 							src={getOptionImg(answerIndex)}
 							alt="option identifier"
-							width={50}
-							className="mb-3"
+							width={user.isUser ? 90 : 50}
+							className={`mb-3 ${user.isUser && "mt-3"}`}
 						/>
-						<p>
-							{answer.content}
-						</p>
+
+						{!user.isUser && (
+							<p>{answer.content}</p>
+						)}
 					</div>
 				))}
 			</article>
