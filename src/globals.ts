@@ -9,5 +9,6 @@ export enum Q_TYPES {
 	addCorrectOption,
 	addGameCode,
 	clearQuestions,
-	userJoins
+	userJoins,
+	setScore
 }

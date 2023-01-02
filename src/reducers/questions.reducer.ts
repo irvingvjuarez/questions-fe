@@ -1,5 +1,5 @@
 import { Q_TYPES } from "@app/globals";
-import { Action, OptionPayload, Question, Questions, UserJoinsPayload } from "@app/types";
+import { Action, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
 export const questionsReducer = (state: Questions, action: Action): Questions => {
 	const { type } = action;
@@ -42,6 +42,13 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 					isUser: true,
 					nickname
 				}
+			}
+		case Q_TYPES.setScore:
+			const score = action.payload as Score[]
+
+			return {
+				...state,
+				score
 			}
 		default:
 			return state

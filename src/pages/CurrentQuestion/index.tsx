@@ -1,5 +1,5 @@
 import { questionsContext } from "@app/contexts/questions.context"
-import { Question, Questions } from "@app/types"
+import { Action, Question, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -7,14 +7,16 @@ import option0 from "@app/assets/option-0.png"
 import option1 from "@app/assets/option-1.png"
 import option2 from "@app/assets/option-2.png"
 import option3 from "@app/assets/option-3.png"
-import { API_ROOT } from "@app/globals"
+import { API_ROOT, Q_TYPES } from "@app/globals"
 
 export const CurrentQuestion = () => {
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	const navigate = useNavigate()
+	let fetchStatusInterval: number
 
-	const { questions, gameCode } = useContext(questionsContext) as Questions
+	const { gameCode, questionsDispatch } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams()
+	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const getOptionImg = (numberId: number) => {
 		switch (numberId) {
@@ -25,12 +27,8 @@ export const CurrentQuestion = () => {
 		}
 	}
 
-	useEffect(() => {
+	const fetchStatus = () => {
 		const api = `${API_ROOT}/game/${gameCode}/current/question/full/status`
-
-		if (gameCode !== Number(paramGameCode)) {
-			navigate("/")
-		}
 
 		fetch(api)
 			.then(res => {
@@ -40,15 +38,34 @@ export const CurrentQuestion = () => {
 				throw new Error()
 			})
 			.then(data => {
-				if (data.isGameOver) {
+				console.log({ data })
+
+				if (data.status.counterActive === false) {
+					dispatch({
+						type: Q_TYPES.setScore,
+						payload: data.sortedScore
+					});
+
+					navigate(`/game/${gameCode}/score/current`)
+				} else if (data.isGameOver) {
 					navigate("/game/over")
 				}
 
-				setCurrentQuestion(data.status.currentQuestion)
+				if (currentQuestion === null) {
+					setCurrentQuestion(data.status.currentQuestion)
+				}
 			})
 			.catch(() => {
 				navigate("/")
 			})
+	}
+
+	useEffect(() => {
+		if (gameCode !== Number(paramGameCode)) {
+			navigate("/")
+		}
+
+		fetchStatusInterval = setInterval(fetchStatus, 1000)
 	}, [])
 
 	return (
@@ -70,7 +87,7 @@ export const CurrentQuestion = () => {
 							className="mb-3"
 						/>
 						<p>
-							{answer.content} option
+							{answer.content}
 						</p>
 					</div>
 				))}
