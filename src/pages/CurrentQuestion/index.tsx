@@ -1,19 +1,20 @@
 import { questionsContext } from "@app/contexts/questions.context"
-import { Questions } from "@app/types"
-import { useContext, useEffect } from "react"
+import { Question, Questions } from "@app/types"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import option0 from "@app/assets/option-0.png"
 import option1 from "@app/assets/option-1.png"
 import option2 from "@app/assets/option-2.png"
 import option3 from "@app/assets/option-3.png"
+import { API_ROOT } from "@app/globals"
 
 export const CurrentQuestion = () => {
+	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	const navigate = useNavigate()
 
 	const { questions, gameCode } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams()
-	const currentQuestion = questions[0]
 
 	const getOptionImg = (numberId: number) => {
 		switch (numberId) {
@@ -25,19 +26,39 @@ export const CurrentQuestion = () => {
 	}
 
 	useEffect(() => {
+		const api = `${API_ROOT}/game/${gameCode}/current/question/full/status`
+
 		if (gameCode !== Number(paramGameCode)) {
 			navigate("/")
 		}
+
+		fetch(api)
+			.then(res => {
+				if (res.ok) {
+					return res.json()
+				}
+				throw new Error()
+			})
+			.then(data => {
+				if (data.isGameOver) {
+					navigate("/game/over")
+				}
+
+				setCurrentQuestion(data.status.currentQuestion)
+			})
+			.catch(() => {
+				navigate("/")
+			})
 	}, [])
 
 	return (
 		<section className="page-container">
 			<h2 className="subtitle text-start">
-				{currentQuestion.content}
+				{currentQuestion?.content}
 			</h2>
 
 			<article className="mt-3 grid grid-cols-2 gap-3">
-				{currentQuestion.answers.map((answer, answerIndex) => (
+				{currentQuestion?.answers.map((answer, answerIndex) => (
 					<div
 						key={answer.id}
 						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg`}
