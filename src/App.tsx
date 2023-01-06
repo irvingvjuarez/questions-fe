@@ -39,7 +39,7 @@ function App() {
 							<Route path='/questions/:questionId/options' element={<Options />} />
 							<Route path='/game/questions/new' element={<NewGame />} />
 							<Route path='/game/:gameCode/room' element={<GameRoom />} />
-							<Route path='/game/:gameCode/current/question' element={<CurrentQuestion />}/>
+							<Route path='/game/:gameCode/current/question/:questionID' element={<CurrentQuestion />}/>
 							<Route path='/game/:gameCode/score/current' element={<CurrentScore />}/>
 						</Routes>
 					</QuestionsProvider>

@@ -93,7 +93,7 @@ export const Options = () => {
 	}, [])
 
 	return (
-		<section>
+		<section className="page-container">
 			<h2 className="subtitle mb-2 font-light">
 				Choose the correct option for the following question:
 			</h2>

@@ -27,8 +27,11 @@ export const GameRoom = () => {
 					nickname: user.nickname
 				}))
 
+
 				if (data.gameStarted) {
-					navigate(`/game/${contextGameCode}/current/question`)
+					// console.log({ data })
+					const currentQuestionID = data.status.currentQuestion.id
+					navigate(`/game/${contextGameCode}/current/question/${currentQuestionID}`)
 				}
 
 				setCurrentUsers(newUsers)
@@ -48,8 +51,10 @@ export const GameRoom = () => {
 			.then(res => res.json())
 			.then(data => {
 				if (data.game.started) {
+					const currentQuestionID = data.game.status.currentQuestion.id
+
 					clearInterval(getUsersInterval)
-					navigate(`/game/${contextGameCode}/current/question`);
+					navigate(`/game/${contextGameCode}/current/question/${currentQuestionID}`);
 				}
 			})
 	}
@@ -59,6 +64,10 @@ export const GameRoom = () => {
 			navigate("/")
 		} else {
 			getUsersInterval = setInterval(fetchUsers, 1000)
+		}
+
+		return () => {
+			clearInterval(getUsersInterval)
 		}
 	}, [])
 
