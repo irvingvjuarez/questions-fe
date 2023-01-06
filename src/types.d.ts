@@ -23,6 +23,15 @@ export type Question = {
 	answeredBy: User[]
 }
 
+export type AnsweredQuestion = {
+	id: string;
+	question: string;
+	answers: Answer[],
+	correctAnswer: string;
+	resolved: boolean;
+	answeredBy: User[]
+}
+
 export type Questions = {
 	gameCode: null | number,
 	questions: Question[],
@@ -32,7 +41,8 @@ export type Questions = {
 		isUser: boolean,
 		nickname: string
 	},
-	score: Score[]
+	score: Score[],
+	answeredQuestion: null | AnsweredQuestion
 }
 
 

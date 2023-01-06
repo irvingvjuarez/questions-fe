@@ -22,7 +22,8 @@ function App() {
 		user: {
 			isUser: false,
 			nickname: ""
-		}
+		},
+		answeredQuestion: null
 	}
 
 	// @ts-ignore
