@@ -10,5 +10,7 @@ export enum Q_TYPES {
 	addGameCode,
 	clearQuestions,
 	userJoins,
-	setScore
+	setScore,
+	userAnswers,
+	userDidntAnswer
 }

@@ -1,10 +1,22 @@
 import { Q_TYPES } from "@app/globals";
-import { Action, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
+import { Action, AnsweredQuestion, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
 export const questionsReducer = (state: Questions, action: Action): Questions => {
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.userDidntAnswer:
+			return {
+				...state,
+				answeredQuestion: null
+			}
+		case Q_TYPES.userAnswers:
+			const answeredQuestion = action.payload as AnsweredQuestion
+
+			return {
+				...state,
+				answeredQuestion
+			}
 		case Q_TYPES.clearQuestions:
 			return {
 				...state,

@@ -51,6 +51,12 @@ export const CurrentQuestion = () => {
 						? `/game/${gameCode}/user/${user.nickname}/current/score`
 						: `/game/${gameCode}/current/score`;
 
+					if (user.isUser) {
+						dispatch({
+							type: Q_TYPES.userDidntAnswer
+						})
+					}
+
 					navigate(navigationEndpoint)
 				} else if (data.isGameOver) {
 					navigate("/game/over")
@@ -85,7 +91,11 @@ export const CurrentQuestion = () => {
 				return res.json()
 			})
 			.then(data => {
-				// dispatch updating the answeredQuestion prop in the global context
+				dispatch({
+					type: Q_TYPES.userAnswers,
+					payload: data.answeredQuestion
+				})
+
 				navigate(`/game/${gameCode}/user/${user.nickname}/current/score`)
 			})
 			.catch(() => {
