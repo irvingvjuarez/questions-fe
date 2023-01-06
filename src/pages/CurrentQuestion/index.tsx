@@ -65,10 +65,32 @@ export const CurrentQuestion = () => {
 			})
 	}
 
-	const answerQuestion = () => {
+	const answerQuestion = (answerId: string) => () => {
 		if (!user.isUser) return
 
+		const fetchConfig = {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: "POST",
+			body: JSON.stringify({ answer: { answerId } })
+		}
 
+		fetch(API_ROOT + `/user/${user.nickname}/answer/${gameCode}`, fetchConfig)
+			.then(res => {
+				if (!res.ok) {
+					throw new Error()
+				}
+				return res.json()
+			})
+			.then(data => {
+				// dispatch updating the answeredQuestion prop in the global context
+				navigate(`/game/${gameCode}/user/${user.nickname}/current/score`)
+			})
+			.catch(() => {
+				navigate("/")
+			})
 	}
 
 	useEffect(() => {
@@ -93,8 +115,8 @@ export const CurrentQuestion = () => {
 				{currentQuestion?.answers.map((answer, answerIndex) => (
 					<button
 						key={answer.id}
-						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg ${user.isUser && "flex items-center justify-center"}`}
-						onClick={answerQuestion}
+						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg ${user.isUser && "flex items-center justify-center cursor-pointer"}`}
+						onClick={answerQuestion(answer.id)}
 					>
 						<img
 							src={getOptionImg(answerIndex)}
