@@ -10,17 +10,13 @@ import option3 from "@app/assets/option-3.png"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 
 export const CurrentQuestion = () => {
-	// const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
+	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	const navigate = useNavigate()
 	let fetchStatusInterval: number
 
-	const { gameCode, questionsDispatch, user, questions } = useContext(questionsContext) as Questions
-	const { gameCode: paramGameCode, questionID } = useParams()
+	const { gameCode, questionsDispatch, user } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams()
 	const dispatch = questionsDispatch as React.Dispatch<Action>
-
-	const currentQuestion = questions.find(question => question.id == questionID)
-
-	console.log({ currentQuestion })
 
 	const getOptionImg = (numberId: number) => {
 		switch (numberId) {
@@ -50,6 +46,7 @@ export const CurrentQuestion = () => {
 						payload: data.sortedScore
 					});
 
+					clearInterval(fetchStatusInterval)
 					navigate(`/game/${gameCode}/score/current`)
 				} else if (data.isGameOver) {
 					navigate("/game/over")
@@ -69,13 +66,16 @@ export const CurrentQuestion = () => {
 			navigate("/")
 		}
 
-		// fetchStatusInterval = setInterval(fetchStatus, 1000)
+		fetchStatusInterval = setInterval(fetchStatus, 1000)
+
+		return () => {
+			clearInterval(fetchStatusInterval)
+		}
 	}, [])
 
 	return (
 		<section className="page-container">
-			<h2>I am the current question page</h2>
-			{/* <h2 className="subtitle text-start">
+			<h2 className="subtitle text-start">
 				{currentQuestion?.content}
 			</h2>
 
@@ -97,7 +97,7 @@ export const CurrentQuestion = () => {
 						)}
 					</div>
 				))}
-			</article> */}
+			</article>
 		</section>
 	)
 }

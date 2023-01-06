@@ -29,9 +29,7 @@ export const GameRoom = () => {
 
 
 				if (data.gameStarted) {
-					// console.log({ data })
-					const currentQuestionID = data.status.currentQuestion.id
-					navigate(`/game/${contextGameCode}/current/question/${currentQuestionID}`)
+					navigate(`/game/${contextGameCode}/current/question`)
 				}
 
 				setCurrentUsers(newUsers)
@@ -51,10 +49,8 @@ export const GameRoom = () => {
 			.then(res => res.json())
 			.then(data => {
 				if (data.game.started) {
-					const currentQuestionID = data.game.status.currentQuestion.id
-
 					clearInterval(getUsersInterval)
-					navigate(`/game/${contextGameCode}/current/question/${currentQuestionID}`);
+					navigate(`/game/${contextGameCode}/current/question`);
 				}
 			})
 	}
