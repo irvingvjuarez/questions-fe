@@ -12,6 +12,7 @@ import { Questions } from './types'
 import { GameRoom } from './pages/GameRoom'
 import { CurrentQuestion } from './pages/CurrentQuestion'
 import { CurrentScore } from './pages/CurrentScore'
+import { UserScore } from './pages/UserScore'
 
 function App() {
 	const initialState: Omit<Questions, "questionsDispatch"> = {
@@ -40,7 +41,11 @@ function App() {
 							<Route path='/game/questions/new' element={<NewGame />} />
 							<Route path='/game/:gameCode/room' element={<GameRoom />} />
 							<Route path='/game/:gameCode/current/question' element={<CurrentQuestion />}/>
-							<Route path='/game/:gameCode/score/current' element={<CurrentScore />}/>
+							<Route path='/game/:gameCode/current/score' element={<CurrentScore />}/>
+							<Route
+								path='/game/:gameCode/user/:nickname/current/score'
+								element={<UserScore />}
+							/>
 						</Routes>
 					</QuestionsProvider>
 			</Layout>

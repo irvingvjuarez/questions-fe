@@ -47,7 +47,11 @@ export const CurrentQuestion = () => {
 					});
 
 					clearInterval(fetchStatusInterval)
-					navigate(`/game/${gameCode}/score/current`)
+					const navigationEndpoint = user.isUser
+						? `/game/${gameCode}/user/${user.nickname}/current/score`
+						: `/game/${gameCode}/current/score`;
+
+					navigate(navigationEndpoint)
 				} else if (data.isGameOver) {
 					navigate("/game/over")
 				}
@@ -59,6 +63,12 @@ export const CurrentQuestion = () => {
 			.catch(() => {
 				navigate("/")
 			})
+	}
+
+	const answerQuestion = () => {
+		if (!user.isUser) return
+
+
 	}
 
 	useEffect(() => {
@@ -81,9 +91,10 @@ export const CurrentQuestion = () => {
 
 			<article className="mt-3 grid grid-cols-2 gap-3">
 				{currentQuestion?.answers.map((answer, answerIndex) => (
-					<div
+					<button
 						key={answer.id}
 						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg ${user.isUser && "flex items-center justify-center"}`}
+						onClick={answerQuestion}
 					>
 						<img
 							src={getOptionImg(answerIndex)}
@@ -95,7 +106,7 @@ export const CurrentQuestion = () => {
 						{!user.isUser && (
 							<p>{answer.content}</p>
 						)}
-					</div>
+					</button>
 				))}
 			</article>
 		</section>
