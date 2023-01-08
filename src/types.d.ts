@@ -29,7 +29,9 @@ export type AnsweredQuestion = {
 	answers: Answer[],
 	correctAnswer: string;
 	resolved: boolean;
-	answeredBy: User[]
+	answeredBy: User[];
+	optionIndex: number;
+	optionImg: string | undefined
 }
 
 export type Questions = {

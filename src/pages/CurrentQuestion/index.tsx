@@ -71,7 +71,7 @@ export const CurrentQuestion = () => {
 			})
 	}
 
-	const answerQuestion = (answerId: string) => () => {
+	const answerQuestion = (answerId: string, optionIndex: number, optionImg: string | undefined) => () => {
 		if (!user.isUser) return
 
 		const fetchConfig = {
@@ -93,7 +93,11 @@ export const CurrentQuestion = () => {
 			.then(data => {
 				dispatch({
 					type: Q_TYPES.userAnswers,
-					payload: data.answeredQuestion
+					payload: {
+						...data.answeredQuestion,
+						optionIndex,
+						optionImg
+					}
 				})
 
 				navigate(`/game/${gameCode}/user/${user.nickname}/current/score`)
@@ -126,7 +130,7 @@ export const CurrentQuestion = () => {
 					<button
 						key={answer.id}
 						className={`option-${answerIndex} rounded-lg text-start p-2 font-semibold text-lg ${user.isUser && "flex items-center justify-center cursor-pointer"}`}
-						onClick={answerQuestion(answer.id)}
+						onClick={answerQuestion(answer.id, answerIndex, getOptionImg(answerIndex))}
 					>
 						<img
 							src={getOptionImg(answerIndex)}
