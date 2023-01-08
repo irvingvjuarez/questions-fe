@@ -1,10 +1,20 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 export const CurrentScore = () => {
-	const { answeredQuestion } = useContext(questionsContext) as Questions
-	console.log({ answeredQuestion })
+	const navigate = useNavigate()
+
+	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams()
+	// console.log({ answeredQuestion })
+
+	useEffect(() => {
+		if (gameCode !== Number(paramGameCode)) {
+			navigate("/")
+		}
+	}, [])
 
 	return (
 		<h2>I am the current score page</h2>
