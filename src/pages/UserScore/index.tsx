@@ -1,14 +1,34 @@
 import { questionsContext } from "@app/contexts/questions.context"
+import { API_ROOT } from "@app/globals"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
 import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const UserScore = () => {
+	let questionResolvedInterval: number
+
+	const navigate = useNavigate()
 	const validation = useErrorValidation()
-	const { answeredQuestion } = useContext(questionsContext) as Questions
+	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
+
+	const showResults = () => {
+		fetch(API_ROOT + `/game/${gameCode}/current/question/resolved`)
+			.then(res => res.json())
+			.then(data => {
+				if (data.isGameOver) {
+					navigate("/game/over")
+				}else if (data.isQuestionResolved) {
+					navigate(`/game/user/current/results`)
+				}
+			})
+	}
 
 	useEffect(() => {
 		validation()
+		questionResolvedInterval = setInterval(showResults, 1000)
+
+		return () => clearInterval(questionResolvedInterval)
 	}, [])
 
 	return (

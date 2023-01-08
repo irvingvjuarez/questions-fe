@@ -31,7 +31,8 @@ export type AnsweredQuestion = {
 	resolved: boolean;
 	answeredBy: User[];
 	optionIndex: number;
-	optionImg: string | undefined
+	optionImg: string | undefined;
+	isUserCorrect: boolean;
 }
 
 export type Questions = {

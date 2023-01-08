@@ -13,6 +13,7 @@ import { GameRoom } from './pages/GameRoom'
 import { CurrentQuestion } from './pages/CurrentQuestion'
 import { CurrentScore } from './pages/CurrentScore'
 import { UserScore } from './pages/UserScore'
+import { UserResults } from './pages/UserResults'
 
 function App() {
 	const initialState: Omit<Questions, "questionsDispatch"> = {
@@ -47,6 +48,7 @@ function App() {
 								path='/game/:gameCode/user/:nickname/current/score'
 								element={<UserScore />}
 							/>
+							<Route path='/game/user/current/results' element={<UserResults />} />
 						</Routes>
 					</QuestionsProvider>
 			</Layout>
