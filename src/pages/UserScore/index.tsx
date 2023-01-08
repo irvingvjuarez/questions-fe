@@ -1,15 +1,32 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 export const UserScore = () => {
-	const { answeredQuestion } = useContext(questionsContext) as Questions
+	const navigate = useNavigate()
+	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
+	const { gameCode: paramGameCode } = useParams()
 
-	console.log({ answeredQuestion })
+	useEffect(() => {
+		if (gameCode !== Number(paramGameCode)) {
+			navigate("/")
+		}
+	}, [])
 
 	return (
-		<section className="page-container">
-			<h2>I am the User Score page</h2>
+		<section className="page-container flex flex-col h-[70vh] justify-between">
+			<h2 className="subtitle">
+				You Chose
+			</h2>
+
+			<div className={`w-[90%] max-w-[200px] mx-auto grid place-content-center rounded-lg py-4 option-${answeredQuestion?.optionIndex}`}>
+				<img className="w-[115px]" src={answeredQuestion?.optionImg} alt="" />
+			</div>
+
+			<span className="subtitle">
+				Waiting the other game members to answer...
+			</span>
 		</section>
 	)
 }

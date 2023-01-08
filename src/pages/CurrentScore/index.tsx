@@ -10,13 +10,9 @@ export const CurrentScore = () => {
 	const { gameCode: paramGameCode } = useParams()
 	// console.log({ answeredQuestion })
 
-	useEffect(() => {
-		if (gameCode !== Number(paramGameCode)) {
-			navigate("/")
-		}
-	}, [])
-
 	return (
-		<h2>I am the current score page</h2>
+		<section className="page-container">
+			<h2>Hi</h2>
+		</section>
 	)
 }
