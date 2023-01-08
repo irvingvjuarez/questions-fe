@@ -1,14 +1,12 @@
-import { questionsContext } from "@app/contexts/questions.context"
-import { Questions } from "@app/types"
-import { useContext, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useErrorValidation } from "@app/hooks/useErrorValidation"
+import { useEffect } from "react"
 
 export const CurrentScore = () => {
-	const navigate = useNavigate()
+	const validation = useErrorValidation()
 
-	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
-	const { gameCode: paramGameCode } = useParams()
-	// console.log({ answeredQuestion })
+	useEffect(() => {
+		validation()
+	}, [])
 
 	return (
 		<section className="page-container">

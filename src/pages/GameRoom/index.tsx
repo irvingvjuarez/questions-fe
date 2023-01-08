@@ -2,11 +2,13 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
+import { useErrorValidation } from "@app/hooks/useErrorValidation"
 import { Action, Questions, User } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
+	const validation = useErrorValidation()
 	let getUsersInterval: number
 
 	const navigate = useNavigate()
@@ -56,11 +58,8 @@ export const GameRoom = () => {
 	}
 
 	useEffect(() => {
-		if (Number(paramGameCode) !== contextGameCode) {
-			navigate("/")
-		} else {
-			getUsersInterval = setInterval(fetchUsers, 1000)
-		}
+		validation()
+		getUsersInterval = setInterval(fetchUsers, 1000)
 
 		return () => {
 			clearInterval(getUsersInterval)

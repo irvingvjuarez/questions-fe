@@ -2,19 +2,13 @@ import { questionsContext } from "@app/contexts/questions.context"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
 import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
 
 export const UserScore = () => {
 	const validation = useErrorValidation()
-	const navigate = useNavigate()
-	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
-	const { gameCode: paramGameCode } = useParams()
+	const { answeredQuestion } = useContext(questionsContext) as Questions
 
 	useEffect(() => {
 		validation()
-		// if (gameCode !== Number(paramGameCode)) {
-		// 	navigate("/")
-		// }
 	}, [])
 
 	return (

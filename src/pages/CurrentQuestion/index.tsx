@@ -1,21 +1,22 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { Action, Question, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import option0 from "@app/assets/option-0.png"
 import option1 from "@app/assets/option-1.png"
 import option2 from "@app/assets/option-2.png"
 import option3 from "@app/assets/option-3.png"
 import { API_ROOT, Q_TYPES } from "@app/globals"
+import { useErrorValidation } from "@app/hooks/useErrorValidation"
 
 export const CurrentQuestion = () => {
+	const validation = useErrorValidation()
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	const navigate = useNavigate()
 	let fetchStatusInterval: number
 
 	const { gameCode, questionsDispatch, user } = useContext(questionsContext) as Questions
-	const { gameCode: paramGameCode } = useParams()
 	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const getOptionImg = (numberId: number) => {
@@ -108,9 +109,7 @@ export const CurrentQuestion = () => {
 	}
 
 	useEffect(() => {
-		if (gameCode !== Number(paramGameCode)) {
-			navigate("/")
-		}
+		validation()
 
 		fetchStatusInterval = setInterval(fetchStatus, 1000)
 
