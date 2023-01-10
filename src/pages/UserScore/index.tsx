@@ -14,13 +14,21 @@ export const UserScore = () => {
 
 	const showResults = () => {
 		fetch(API_ROOT + `/game/${gameCode}/current/question/resolved`)
-			.then(res => res.json())
+			.then(res => {
+				if (!res.ok) {
+					throw new Error()
+				}
+				return res.json()
+			})
 			.then(data => {
 				if (data.isGameOver) {
 					navigate("/game/over")
 				}else if (data.isQuestionResolved) {
 					navigate(`/game/${gameCode}/user/current/results`)
 				}
+			})
+			.catch(() => {
+				navigate("/")
 			})
 	}
 

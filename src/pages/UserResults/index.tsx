@@ -12,6 +12,8 @@ export const UserResults = () => {
 	const isUserRight = answeredQuestion?.isUserCorrect
 	const userData = answeredQuestion?.answeredBy.find(user => user.userNickname == nickname)
 
+	// console.log({ answeredQuestion })
+
 	useEffect(() => {
 		validation()
 	}, [])
