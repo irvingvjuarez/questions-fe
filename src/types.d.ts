@@ -3,11 +3,11 @@ import { Q_TYPES } from "./globals.ts";
 // TYPES THAT WORK AS CLASSES IN THE BACKEND
 export interface User {
 	nickname: string;
-	userScore: number
 }
 
 export interface Score extends User {
-	score: number,
+	userNickname: string,
+	userScore: number
 }
 
 export type Answer = {
@@ -30,7 +30,7 @@ export type AnsweredQuestion = {
 	answers: Answer[],
 	correctAnswer: string;
 	resolved: boolean;
-	answeredBy: User[];
+	answeredBy: Score[];
 	optionIndex: number;
 	optionImg: string | undefined;
 	isUserCorrect: boolean;

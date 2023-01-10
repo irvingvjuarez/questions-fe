@@ -10,7 +10,7 @@ export const UserResults = () => {
 	const validation = useErrorValidation()
 	const { answeredQuestion, user: {nickname} } = useContext(questionsContext) as Questions
 	const isUserRight = answeredQuestion?.isUserCorrect
-	const userData = answeredQuestion?.answeredBy.find(user => user.nickname == nickname)
+	const userData = answeredQuestion?.answeredBy.find(user => user.userNickname == nickname)
 
 	useEffect(() => {
 		validation()
