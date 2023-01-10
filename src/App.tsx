@@ -48,7 +48,7 @@ function App() {
 								path='/game/:gameCode/user/:nickname/current/score'
 								element={<UserScore />}
 							/>
-							<Route path='/game/user/current/results' element={<UserResults />} />
+							<Route path='/game/:gameCode/user/current/results' element={<UserResults />} />
 						</Routes>
 					</QuestionsProvider>
 			</Layout>
