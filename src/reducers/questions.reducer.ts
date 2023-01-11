@@ -5,6 +5,11 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.clearAnsweredQuestion:
+			return {
+				...state,
+				answeredQuestion: null
+			}
 		case Q_TYPES.userDidntAnswer:
 			return {
 				...state,

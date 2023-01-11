@@ -12,5 +12,6 @@ export enum Q_TYPES {
 	userJoins,
 	setScore,
 	userAnswers,
-	userDidntAnswer
+	userDidntAnswer,
+	clearAnsweredQuestion
 }

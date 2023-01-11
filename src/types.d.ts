@@ -3,6 +3,7 @@ import { Q_TYPES } from "./globals.ts";
 // TYPES THAT WORK AS CLASSES IN THE BACKEND
 export interface User {
 	nickname: string;
+	score?: number;
 }
 
 export interface Score extends User {
