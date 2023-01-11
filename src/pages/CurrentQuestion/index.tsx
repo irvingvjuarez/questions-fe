@@ -12,6 +12,7 @@ import { useErrorValidation } from "@app/hooks/useErrorValidation"
 
 export const CurrentQuestion = () => {
 	const validation = useErrorValidation()
+
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	const navigate = useNavigate()
 	let fetchStatusInterval: number
