@@ -17,7 +17,7 @@ export const UserResults = () => {
 
 	useEffect(() => {
 		validation()
-		dispatch({ type: Q_TYPES.clearAnsweredQuestion })
+		// dispatch({ type: Q_TYPES.clearAnsweredQuestion })
 	}, [])
 
 	return(
