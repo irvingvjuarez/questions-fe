@@ -14,6 +14,7 @@ import { CurrentQuestion } from './pages/CurrentQuestion'
 import { CurrentScore } from './pages/CurrentScore'
 import { UserScore } from './pages/UserScore'
 import { UserResults } from './pages/UserResults'
+import { GameOver } from './pages/GameOver'
 
 function App() {
 	const initialState: Omit<Questions, "questionsDispatch"> = {
@@ -49,6 +50,7 @@ function App() {
 								element={<UserScore />}
 							/>
 							<Route path='/game/:gameCode/user/current/results' element={<UserResults />} />
+							<Route path='/game/over' element={<GameOver />}/>
 						</Routes>
 					</QuestionsProvider>
 			</Layout>

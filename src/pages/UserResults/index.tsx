@@ -17,6 +17,7 @@ export const UserResults = () => {
 	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const isUserRight = answeredQuestion?.isUserCorrect
+
 	const userData = answeredQuestion?.answeredBy.find(user => user.userNickname == nickname)
 
 	const isGameRestarted = () => {
