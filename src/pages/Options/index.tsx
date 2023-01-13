@@ -33,13 +33,16 @@ export const Options = () => {
 	}
 
 	const createGame = () => {
+		const newQuestions = [...questions]
+		newQuestions[currentQuestionIndex].correctAnswer = correctOptionID
+
 		const fetchConfig = {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
 			method: "POST",
-			body: JSON.stringify({ questions })
+			body: JSON.stringify({ questions: newQuestions })
 		}
 
 		fetch(API_ROOT + "/game/create", fetchConfig)
@@ -47,12 +50,15 @@ export const Options = () => {
 			.then(data => {
 				const { gameCode } = data
 
-				dispatch({ type: Q_TYPES.addGameCode, payload: gameCode });
+				dispatch({ type: Q_TYPES.addGameCode, payload: {
+					gameCode,
+					newQuestions
+				}});
 				navigate(`/game/${gameCode}/room`)
 			})
 	}
 
-	const addCorrectOption = () => {
+	const addAnotherQuestion = () => {
 		dispatch({
 			type: Q_TYPES.addCorrectOption,
 			payload: {
@@ -61,7 +67,6 @@ export const Options = () => {
 				questionIndex: currentQuestionIndex
 			}
 		});
-
 		navigate(`/game/questions/new`)
 	}
 
@@ -138,7 +143,7 @@ export const Options = () => {
 				<Button
 					variant="inactive"
 					disabled={!correctOptionID}
-					handleClick={addCorrectOption}
+					handleClick={addAnotherQuestion}
 				>
 					Add another question
 				</Button>

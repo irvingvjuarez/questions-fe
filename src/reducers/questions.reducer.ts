@@ -1,5 +1,5 @@
 import { Q_TYPES } from "@app/globals";
-import { Action, AnsweredQuestion, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
+import { Action, AnsweredQuestion, CreateGamePayload, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
 export const questionsReducer = (state: Questions, action: Action): Questions => {
 	const { type } = action;
@@ -43,9 +43,12 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				questions: newQuestions
 			}
 		case Q_TYPES.addGameCode:
+			const { gameCode: code, newQuestions: nQuestions } = action.payload as CreateGamePayload
+
 			return {
 				...state,
-				gameCode: action.payload as number
+				gameCode: code,
+				questions: nQuestions
 			}
 		case Q_TYPES.userJoins:
 			const { questions, gameUsers, gameCode, nickname } = action.payload as UserJoinsPayload

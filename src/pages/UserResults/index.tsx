@@ -14,6 +14,9 @@ export const UserResults = () => {
 	let gameRestartedInterval: number
 
 	const { answeredQuestion, user: {nickname}, questionsDispatch, gameCode } = useContext(questionsContext) as Questions
+
+	console.log({ answeredQuestion })
+
 	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const isUserRight = answeredQuestion?.isUserCorrect

@@ -64,6 +64,11 @@ export type OptionPayload = {
 	questionIndex: number;
 }
 
+export type CreateGamePayload = {
+	gameCode: number;
+	newQuestions: Question[]
+}
+
 export type UserJoinsPayload = {
 	questions: Question[];
 	gameUsers: User[];
