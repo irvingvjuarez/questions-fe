@@ -1,4 +1,5 @@
 import { Q_TYPES } from "@app/globals";
+import { getNewQuestions } from "@app/services/getNewQuestions";
 import { Action, AnsweredQuestion, CreateGamePayload, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
 export const questionsReducer = (state: Questions, action: Action): Questions => {
@@ -34,9 +35,7 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				questions: [...state.questions, newQuestion]
 			}
 		case Q_TYPES.addCorrectOption:
-			const { questionIndex, optionId } = action.payload as OptionPayload
-			const newQuestions = [...state.questions]
-			newQuestions[questionIndex].correctAnswer = optionId
+			const { newQuestions } = action.payload as OptionPayload
 
 			return {
 				...state,

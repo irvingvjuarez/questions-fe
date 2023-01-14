@@ -59,9 +59,7 @@ export type Action = {
 }
 
 export type OptionPayload = {
-	questionId: string;
-	optionId: string;
-	questionIndex: number;
+	newQuestions: Question[]
 }
 
 export type CreateGamePayload = {
@@ -74,4 +72,10 @@ export type UserJoinsPayload = {
 	gameUsers: User[];
 	gameCode: string;
 	nickname: string;
+}
+
+export type GetNewQuestions = {
+	questions: Question[];
+	index: number;
+	optionID: string;
 }

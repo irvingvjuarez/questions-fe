@@ -2,6 +2,7 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
+import { getNewQuestions } from "@app/services/getNewQuestions"
 import { Action, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -33,8 +34,11 @@ export const Options = () => {
 	}
 
 	const createGame = () => {
-		const newQuestions = [...questions]
-		newQuestions[currentQuestionIndex].correctAnswer = correctOptionID
+		const newQuestions = getNewQuestions({
+			questions,
+			index: currentQuestionIndex,
+			optionID: correctOptionID as string
+		})
 
 		const fetchConfig = {
 			headers: {
@@ -59,14 +63,17 @@ export const Options = () => {
 	}
 
 	const addAnotherQuestion = () => {
+		const newQuestions = getNewQuestions({
+			questions,
+			index: currentQuestionIndex,
+			optionID: correctOptionID as string
+		})
+
 		dispatch({
 			type: Q_TYPES.addCorrectOption,
-			payload: {
-				questionId: currentQuestion.id,
-				optionId: correctOptionID,
-				questionIndex: currentQuestionIndex
-			}
+			payload: { newQuestions }
 		});
+
 		navigate(`/game/questions/new`)
 	}
 
