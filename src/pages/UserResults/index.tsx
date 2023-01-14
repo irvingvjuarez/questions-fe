@@ -15,8 +15,6 @@ export const UserResults = () => {
 
 	const { answeredQuestion, user: {nickname}, questionsDispatch, gameCode } = useContext(questionsContext) as Questions
 
-	console.log({ answeredQuestion })
-
 	const dispatch = questionsDispatch as React.Dispatch<Action>
 
 	const isUserRight = answeredQuestion?.isUserCorrect
@@ -32,7 +30,7 @@ export const UserResults = () => {
 			.then(data => {
 				let navigateEndpoint
 
-				if (data.isGameOver) navigateEndpoint = "/game/over"
+				if (data.isGameOver) navigateEndpoint = `/game/${gameCode}/over`
 				if (data.status.counterActive) navigateEndpoint = `/game/${gameCode}/current/question`
 
 				if (navigateEndpoint) {

@@ -22,7 +22,7 @@ export const UserScore = () => {
 			})
 			.then(data => {
 				if (data.isGameOver) {
-					navigate("/game/over")
+					navigate(`/game/${gameCode}/over`)
 				}else if (data.isQuestionResolved) {
 					navigate(`/game/${gameCode}/user/current/results`)
 				}

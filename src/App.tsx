@@ -50,7 +50,7 @@ function App() {
 								element={<UserScore />}
 							/>
 							<Route path='/game/:gameCode/user/current/results' element={<UserResults />} />
-							<Route path='/game/over' element={<GameOver />}/>
+							<Route path='/game/:gameCode/over' element={<GameOver />}/>
 						</Routes>
 					</QuestionsProvider>
 			</Layout>

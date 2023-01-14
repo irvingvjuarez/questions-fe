@@ -61,7 +61,7 @@ export const CurrentQuestion = () => {
 
 					navigate(navigationEndpoint)
 				} else if (data.isGameOver) {
-					navigate("/game/over")
+					navigate(`/game/${gameCode}/over`)
 				}
 
 				if (currentQuestion === null) {

@@ -29,7 +29,7 @@ export const CurrentScore = () => {
 			})
 			.then(data => {
 				if (data.isGameOver) {
-					navigate("/game/over")
+					navigate(`/game/${gameCode}/over`)
 				} else {
 					navigate(`/game/${gameCode}/current/question`)
 				}
