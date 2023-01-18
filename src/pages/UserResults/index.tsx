@@ -22,7 +22,7 @@ export const UserResults = () => {
 	const userData = answeredQuestion?.answeredBy.find(user => user.userNickname == nickname)
 
 	const isGameRestarted = () => {
-		fetch(API_ROOT + `/user/${gameCode}/current/question/status`)
+		fetch(API_ROOT + `/game/${gameCode}/current/question/full/status`)
 			.then(res => {
 				if (!res.ok) throw new Error()
 				return res.json()
@@ -34,7 +34,11 @@ export const UserResults = () => {
 				if (data.status.counterActive) navigateEndpoint = `/game/${gameCode}/current/question`
 
 				if (navigateEndpoint) {
-					dispatch({ type: Q_TYPES.clearAnsweredQuestion })
+					dispatch({
+						type: Q_TYPES.clearAnsweredQuestion,
+						payload: { score: data.sortedScore }
+					})
+
 					clearInterval(gameRestartedInterval)
 					navigate(navigateEndpoint)
 				}

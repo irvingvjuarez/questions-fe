@@ -7,9 +7,12 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 
 	switch(type) {
 		case Q_TYPES.clearAnsweredQuestion:
+			const sortedScore = (action.payload as { score: Score[] }).score
+
 			return {
 				...state,
-				answeredQuestion: null
+				answeredQuestion: null,
+				score: sortedScore
 			}
 		case Q_TYPES.userDidntAnswer:
 			return {
