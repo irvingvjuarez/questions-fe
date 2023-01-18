@@ -12,7 +12,7 @@ type ScoreTableProps = {
 
 export const ScoreTable: React.FC<ScoreTableProps> = ({ finalScore }) => {
 	const { score } = useContext(questionsContext) as Questions
-	const diplayedScore = finalScore ? score.filter((_item, index) => index <= 2) : score
+	const diplayedScore = finalScore ? score?.filter((_item, index) => index <= 2) : score
 
 	const getMedal = (index: number) => {
 		switch(index) {
