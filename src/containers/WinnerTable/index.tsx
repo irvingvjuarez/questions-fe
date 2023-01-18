@@ -1,5 +1,5 @@
 import { ScoreTable } from "../ScoreTable"
 
 export const WinnerTable = () => {
-	return <ScoreTable />
+	return <ScoreTable finalScore={true} />
 }
