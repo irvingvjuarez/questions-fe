@@ -1,13 +1,18 @@
 import { questionsContext } from "@app/contexts/questions.context"
-import { Questions } from "@app/types"
+import { Questions, Score, User } from "@app/types"
 import { Fragment, useContext } from "react"
 
 import winner from "@app/assets/trophy.png"
 import loser from "@app/assets/disappointed.png"
 
-export const GameOverUser = () => {
-	const { score, user: {nickname} } = useContext(questionsContext) as Questions
-	const scoreIndex = score.findIndex(user => user.userNickname == nickname)
+type GameOverUserProps = {
+	user: User;
+	score: Questions["score"]
+}
+
+export const GameOverUser: React.FC<GameOverUserProps> = ({ user, score }) => {
+	const nickname = user.nickname
+	const scoreIndex = score?.findIndex(user => user.userNickname == nickname)
 
 	let position
 

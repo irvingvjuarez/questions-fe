@@ -7,7 +7,8 @@ import { GameOverUser } from "./User"
 
 export const GameOver = () => {
 	const validation = useErrorValidation()
-	const { user } = useContext(questionsContext) as Questions
+	const { user, score } = useContext(questionsContext) as Questions
+	const userProps = { user, score }
 
 	useEffect(() => {
 		validation()
@@ -15,7 +16,7 @@ export const GameOver = () => {
 
 	return (
 		<section className="page-container h-[70vh] flex flex-col justify-between">
-			{user.isUser ? <GameOverUser /> : <GameOverAdmin />}
+			{user.isUser ? <GameOverUser {...userProps} /> : <GameOverAdmin />}
 		</section>
 	)
 }
