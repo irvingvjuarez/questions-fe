@@ -1,4 +1,5 @@
 import { Q_TYPES } from "@app/globals";
+import { getInitialState } from "@app/services/getInitialState";
 import { getNewQuestions } from "@app/services/getNewQuestions";
 import { Action, AnsweredQuestion, CreateGamePayload, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
@@ -6,6 +7,10 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.clearGame:
+			const resetedGame = getInitialState()
+
+			return resetedGame
 		case Q_TYPES.clearAnsweredQuestion:
 			const sortedScore = (action.payload as { score: Score[] }).score
 

@@ -4,11 +4,20 @@ import { Fragment, useContext, useEffect } from "react"
 
 import winner from "@app/assets/trophy.png"
 import loser from "@app/assets/disappointed.png"
+import { ButtonsContainer } from "@app/containers/ButtonsContainer"
+import { Button } from "@app/components/Button"
+import { useNavigate } from "react-router-dom"
+import { Q_TYPES } from "@app/globals"
 
 export const GameOverUser = () => {
-	const { user, score } = useContext(questionsContext) as Questions
+	const navigate = useNavigate()
+	const { user, score, questionsDispatch } = useContext(questionsContext) as Questions
 	const nickname = user.nickname
 	const scoreIndex = score.findIndex(item => item.nickname == nickname)
+	const quitGame = () => {
+		questionsDispatch({ type: Q_TYPES.clearGame })
+		navigate("/")
+	}
 
 	let position = "", message
 
@@ -54,6 +63,15 @@ export const GameOverUser = () => {
 					{score[scoreIndex].score}
 				</span>
 			</p>
+
+			<ButtonsContainer>
+				<Button
+					variant="active"
+					handleClick={quitGame}
+				>
+					Quit
+				</Button>
+			</ButtonsContainer>
 		</Fragment>
 	)
 }

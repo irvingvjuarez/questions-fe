@@ -15,18 +15,10 @@ import { CurrentScore } from './pages/CurrentScore'
 import { UserScore } from './pages/UserScore'
 import { UserResults } from './pages/UserResults'
 import { GameOver } from './pages/GameOver'
+import { getInitialState } from './services/getInitialState'
 
 function App() {
-	const initialState: Omit<Questions, "questionsDispatch"> = {
-		questions: [],
-		gameCode: null,
-		gameUsers: [],
-		user: {
-			isUser: false,
-			nickname: ""
-		},
-		answeredQuestion: null
-	}
+	const initialState = getInitialState()
 
 	// @ts-ignore
 	const [questions, questionsDispatch] = useReducer(questionsReducer, initialState);

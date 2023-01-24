@@ -40,7 +40,7 @@ export type AnsweredQuestion = {
 export type Questions = {
 	gameCode: null | number,
 	questions: Question[],
-	questionsDispatch(): void,
+	questionsDispatch(Action): void,
 	gameUsers: User[],
 	user: {
 		isUser: boolean,
