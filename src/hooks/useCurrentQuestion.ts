@@ -1,6 +1,7 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { getPostConfig } from "@app/services/getPostConfig"
+import { SetFetch, setFetch } from "@app/services/setFetch"
 import { Question, Questions, User } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -64,22 +65,27 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 	const answerQuestion = (answerId: string, optionIndex: number, optionImg: string | undefined) => async () => {
 		if (!user.isUser) return
 
-		const fetchConfig = getPostConfig({ answer: { answerId } })
+		const config = getPostConfig({ answer: { answerId } })
+		try {
+			setFetch({
+				endpoint: `${API_ROOT}/user/${user.nickname}/answer/${gameCode}`,
+				config,
+				callback: (data) => {
+					questionsDispatch({
+						type: Q_TYPES.userAnswers,
+						payload: {
+							...data.answeredQuestion,
+							optionIndex,
+							optionImg
+						}
+					})
 
-		const res = await fetch(API_ROOT + `/user/${user.nickname}/answer/${gameCode}`, fetchConfig)
-		if (!res.ok) navigate("/")
-
-		const data = await res.json()
-		questionsDispatch({
-			type: Q_TYPES.userAnswers,
-			payload: {
-				...data.answeredQuestion,
-				optionIndex,
-				optionImg
-			}
-		})
-
-		navigate(`/game/${gameCode}/user/${user.nickname}/current/score`)
+					navigate(`/game/${gameCode}/user/${user.nickname}/current/score`)
+				}
+			})
+		}catch(err) {
+			navigate("/")
+		}
 
 		return undefined
 	}

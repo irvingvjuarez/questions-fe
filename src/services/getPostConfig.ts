@@ -1,4 +1,6 @@
-export const getPostConfig = (data?: Object) => {
+import { PostConfig } from "@app/types"
+
+export const getPostConfig = (data?: Object): PostConfig => {
 	return {
 		headers: {
 			'Accept': 'application/json',

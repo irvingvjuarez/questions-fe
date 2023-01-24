@@ -79,3 +79,12 @@ export type GetNewQuestions = {
 	index: number;
 	optionID: string;
 }
+
+export type PostConfig = {
+	headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json'
+	},
+	method: "POST",
+	body: string | null
+}
