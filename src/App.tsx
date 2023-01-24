@@ -8,7 +8,6 @@ import { NewGame } from './pages/NewGame'
 import { questionsReducer } from "@app/reducers/questions.reducer"
 import { QuestionsProvider } from "@app/contexts/questions.context"
 import { Options } from './pages/Options'
-import { Questions } from './types'
 import { GameRoom } from './pages/GameRoom'
 import { CurrentQuestion } from './pages/CurrentQuestion'
 import { CurrentScore } from './pages/CurrentScore'

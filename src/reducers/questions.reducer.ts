@@ -1,6 +1,5 @@
 import { Q_TYPES } from "@app/globals";
 import { getInitialState } from "@app/services/getInitialState";
-import { getNewQuestions } from "@app/services/getNewQuestions";
 import { Action, AnsweredQuestion, CreateGamePayload, OptionPayload, Question, Questions, Score, UserJoinsPayload } from "@app/types";
 
 export const questionsReducer = (state: Questions, action: Action): Questions => {
