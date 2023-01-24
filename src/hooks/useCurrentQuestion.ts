@@ -1,5 +1,6 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
+import { getPostConfig } from "@app/services/getPostConfig"
 import { Question, Questions, User } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -63,14 +64,7 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 	const answerQuestion = (answerId: string, optionIndex: number, optionImg: string | undefined) => async () => {
 		if (!user.isUser) return
 
-		const fetchConfig = {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			method: "POST",
-			body: JSON.stringify({ answer: { answerId } })
-		}
+		const fetchConfig = getPostConfig({ answer: { answerId } })
 
 		const res = await fetch(API_ROOT + `/user/${user.nickname}/answer/${gameCode}`, fetchConfig)
 		if (!res.ok) navigate("/")
@@ -92,7 +86,6 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 
 	useEffect(() => {
 		validation()
-
 		fetchStatusInterval = setInterval(fetchStatus, 1000)
 
 		return () => clearInterval(fetchStatusInterval)
