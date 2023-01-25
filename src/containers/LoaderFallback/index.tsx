@@ -7,7 +7,7 @@ export const LoaderFallback: React.FC<LoaderFallbackProps> = ({ children }) => {
 	const { loading } = useContext(questionsContext) as Questions
 
 	if (loading) return (
-		<div className="w-f my-4">
+		<div className="w-f my-4 grid place-content-center">
 			<Loader />
 		</div>
 	)
