@@ -2,12 +2,13 @@ import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { getNewQuestions } from "@app/services/getNewQuestions"
 import { getPostConfig } from "@app/services/getPostConfig"
-import { setFetch } from "@app/services/setFetch"
 import { Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { useFetch } from "./useFetch"
 
 export const useOptionsForm = () => {
+	const setFetch = useFetch()
 	const navigate = useNavigate()
 	const [correctOptionID, setCorrectOptionID] = useState<string | null>(null)
 
@@ -31,10 +32,13 @@ export const useOptionsForm = () => {
 				config,
 				endpoint: API_ROOT + "/game/create",
 				callback: (data) => {
-					questionsDispatch({ type: Q_TYPES.addGameCode, payload: {
-						gameCode: data.gameCode,
-						newQuestions
-					}});
+					questionsDispatch({
+						type: Q_TYPES.addGameCode,
+						payload: {
+							gameCode: data.gameCode,
+							newQuestions
+						}
+					});
 
 					navigate(`/game/${data.gameCode}/room`)
 				}

@@ -54,7 +54,8 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 			return {
 				...state,
 				gameCode: code,
-				questions: nQuestions
+				questions: nQuestions,
+				loading: false
 			}
 		case Q_TYPES.userJoins:
 			const { questions, gameUsers, gameCode, nickname } = action.payload as UserJoinsPayload
