@@ -47,7 +47,9 @@ export type Questions = {
 		nickname: string
 	},
 	score: Score[],
-	answeredQuestion: null | AnsweredQuestion
+	answeredQuestion: null | AnsweredQuestion,
+	loading: boolean,
+	error: boolean
 }
 
 

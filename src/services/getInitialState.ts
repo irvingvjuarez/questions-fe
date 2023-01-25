@@ -12,5 +12,7 @@ export const getInitialState = (): Questions => {
 		answeredQuestion: null,
 		questionsDispatch: () => null,
 		score: [],
+		loading: false,
+		error: false
 	}
 }
