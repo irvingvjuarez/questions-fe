@@ -2,15 +2,14 @@ import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { getPostConfig } from "@app/services/getPostConfig"
 import { setFetch } from "@app/services/setFetch"
-import { Question, Questions, User } from "@app/types"
+import { Question, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useErrorValidation } from "./useErrorValidation"
 
 type UseCurrentQuestion = {
 	currentQuestion: Question | null,
-	answerQuestion(answerId: string, optionIndex: number, optionImg: string | undefined): undefined,
-	user: Questions["user"]
+	answerQuestion(answerId: string, optionIndex: number, optionImg: string | undefined): undefined
 }
 
 export const useCurrentQuestion = (): UseCurrentQuestion => {
@@ -96,7 +95,6 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 
 	return {
 		currentQuestion,
-		answerQuestion,
-		user
+		answerQuestion
 	}
 }
