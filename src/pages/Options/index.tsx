@@ -1,9 +1,11 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
+import { useKeypress } from "@app/hooks/useKeypress"
 import { useOptionsForm } from "@app/hooks/useOptionsForm"
 
 export const Options = () => {
 	const { currentQuestion, handleChecked, createGame, correctOptionID, addAnotherQuestion } = useOptionsForm()
+	const { hoverOption } = useKeypress()
 
 	return (
 		<section className="page-container">
