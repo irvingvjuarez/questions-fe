@@ -2,40 +2,37 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { ScoreTable } from "@app/containers/ScoreTable"
 import { questionsContext } from "@app/contexts/questions.context"
-import { API_ROOT, Q_TYPES } from "@app/globals"
+import { API_ROOT } from "@app/globals"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
-import { Action, Questions } from "@app/types"
+import { getPostConfig } from "@app/services/getPostConfig"
+import { setFetch } from "@app/services/setFetch"
+import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const CurrentScore = () => {
 	const validation = useErrorValidation()
 	const navigate = useNavigate()
-	const { score, gameCode, questionsDispatch } = useContext(questionsContext) as Questions
-	const dispatch = questionsDispatch as React.Dispatch<Action>
+	const { gameCode } = useContext(questionsContext) as Questions
 
 	const restartGame = () => {
-		const fetchConfig = {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			method: "POST"
-		}
+		const config = getPostConfig()
 
-		fetch(API_ROOT + `/game/${gameCode}/next/question/start`, fetchConfig)
-			.then(res => {
-				if(!res.ok) throw new Error()
-				return res.json()
-			})
-			.then(data => {
-				if (data.isGameOver) {
-					navigate(`/game/${gameCode}/over`)
-				} else {
-					navigate(`/game/${gameCode}/current/question`)
+		try {
+			setFetch({
+				endpoint: API_ROOT + `/game/${gameCode}/next/question/start`,
+				config,
+				callback: (data) => {
+					const pageEndpoint = data.isGameOver
+						? `/game/${gameCode}/over`
+						: `/game/${gameCode}/current/question`
+
+					navigate(pageEndpoint)
 				}
 			})
-			.catch(() => navigate("/"))
+		} catch(err) {
+			navigate("/")
+		}
 	}
 
 	useEffect(() => {

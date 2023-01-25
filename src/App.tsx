@@ -17,10 +17,7 @@ import { GameOver } from './pages/GameOver'
 import { getInitialState } from './services/getInitialState'
 
 function App() {
-	const initialState = getInitialState()
-
-	// @ts-ignore
-	const [questions, questionsDispatch] = useReducer(questionsReducer, initialState);
+	const [questions, questionsDispatch] = useReducer(questionsReducer, getInitialState());
 	const questionsValue = { ...questions, questionsDispatch }
 
   return (
