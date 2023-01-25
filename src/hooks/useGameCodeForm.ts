@@ -1,13 +1,14 @@
 import { questionsContext } from "@app/contexts/questions.context";
 import { API_ROOT, Q_TYPES } from "@app/globals";
 import { getPostConfig } from "@app/services/getPostConfig";
-import { setFetch } from "@app/services/setFetch";
 import { Questions } from "@app/types";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFetch } from "./useFetch";
 
 export const useGameCodeForm = () => {
 	const navigate = useNavigate();
+	const setFetch = useFetch()
 
 	const [nickname, setNickname] = useState("")
 	const [gameCode, setGameCode] = useState<null | number>(null)

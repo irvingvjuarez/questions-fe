@@ -15,5 +15,6 @@ export enum Q_TYPES {
 	userDidntAnswer,
 	clearAnsweredQuestion,
 	clearGame,
-	setLoading
+	setLoading,
+	removeLoading
 }

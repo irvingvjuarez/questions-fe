@@ -13,7 +13,7 @@ export const GameRoom = () => {
 	let getUsersInterval: number
 
 	const navigate = useNavigate()
-	const { gameCode: contextGameCode, gameUsers = [], user } = useContext(questionsContext) as Questions
+	const { gameCode: contextGameCode, gameUsers = [], user, questionsDispatch } = useContext(questionsContext) as Questions
 	const { gameCode: paramGameCode } = useParams();
 
 	const [currentUsers, setCurrentUsers] = useState<User[]>(gameUsers)
@@ -53,6 +53,8 @@ export const GameRoom = () => {
 			.then(data => {
 				if (data.game.started) {
 					clearInterval(getUsersInterval)
+					questionsDispatch({ type: Q_TYPES.removeLoading })
+
 					navigate(`/game/${contextGameCode}/current/question`);
 				}
 			})

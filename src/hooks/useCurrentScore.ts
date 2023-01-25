@@ -1,15 +1,16 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT } from "@app/globals"
 import { getPostConfig } from "@app/services/getPostConfig"
-import { setFetch } from "@app/services/setFetch"
 import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useErrorValidation } from "./useErrorValidation"
+import { useFetch } from "./useFetch"
 
 export const useCurrentScore = () => {
 	const validation = useErrorValidation()
 	const navigate = useNavigate()
+	const setFetch = useFetch()
 
 	const { gameCode } = useContext(questionsContext) as Questions
 

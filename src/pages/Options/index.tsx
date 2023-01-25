@@ -1,6 +1,5 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
-import { LoaderFallback } from "@app/containers/LoaderFallback"
 import { PossibleCorrectAnswers } from "@app/containers/PossibleCorrectAnswers"
 import { useOptionsForm } from "@app/hooks/useOptionsForm"
 
@@ -8,7 +7,7 @@ export const Options = () => {
 	const { currentQuestion, handleChecked, createGame, correctOptionID, addAnotherQuestion } = useOptionsForm()
 
 	return (
-		<LoaderFallback>
+		<section className="page-container">
 			<h2 className="subtitle mb-2 font-light">
 				Choose the correct option for the following question:
 			</h2>
@@ -40,6 +39,6 @@ export const Options = () => {
 					Add another question
 				</Button>
 			</ButtonsContainer>
-		</LoaderFallback>
+		</section>
 	)
 }

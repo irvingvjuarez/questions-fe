@@ -6,6 +6,11 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.removeLoading:
+			return {
+				...state,
+				loading: false
+			}
 		case Q_TYPES.setLoading:
 			return {
 				...state,
@@ -60,7 +65,7 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				...state,
 				gameCode: code,
 				questions: nQuestions,
-				// loading: false
+				loading: false
 			}
 		case Q_TYPES.userJoins:
 			const { questions, gameUsers, gameCode, nickname } = action.payload as UserJoinsPayload
@@ -73,7 +78,8 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 				user: {
 					isUser: true,
 					nickname
-				}
+				},
+				loading: false
 			}
 		case Q_TYPES.setScore:
 			const score = action.payload as Score[]

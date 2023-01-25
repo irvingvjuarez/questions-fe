@@ -1,11 +1,11 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { getPostConfig } from "@app/services/getPostConfig"
-import { setFetch } from "@app/services/setFetch"
 import { Question, Questions } from "@app/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useErrorValidation } from "./useErrorValidation"
+import { useFetch } from "./useFetch"
 
 type UseCurrentQuestion = {
 	currentQuestion: Question | null,
@@ -15,6 +15,7 @@ type UseCurrentQuestion = {
 export const useCurrentQuestion = (): UseCurrentQuestion => {
 	const validation = useErrorValidation()
 	const navigate = useNavigate()
+	const setFetch = useFetch()
 
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 	let fetchStatusInterval: number
