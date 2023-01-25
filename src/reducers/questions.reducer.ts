@@ -6,6 +6,11 @@ export const questionsReducer = (state: Questions, action: Action): Questions =>
 	const { type } = action;
 
 	switch(type) {
+		case Q_TYPES.setLoading:
+			return {
+				...state,
+				loading: true
+			}
 		case Q_TYPES.clearGame:
 			const resetedGame = getInitialState()
 
