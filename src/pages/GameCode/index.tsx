@@ -6,58 +6,45 @@ import { Button } from "@app/components/Button"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList";
 import { questionsContext } from "@app/contexts/questions.context";
-import { Action, Questions } from "@app/types";
+import { Questions } from "@app/types";
 import { useNavigate } from "react-router-dom";
+import { getPostConfig } from "@app/services/getPostConfig";
+import { setFetch } from "@app/services/setFetch";
 
 export const GameCode = () => {
+	const navigate = useNavigate();
+
 	const [nickname, setNickname] = useState("")
 	const [gameCode, setGameCode] = useState<null | number>(null)
 	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
 
-	const navigate = useNavigate();
 	const { questionsDispatch } = useContext(questionsContext) as Questions;
-	const dispatch = questionsDispatch as React.Dispatch<Action>
-
-	const changeNickname = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		setNickname(evt.target.value)
-	}
-	const changeGameCode = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		setGameCode(Number(evt.target.value))
-	}
+	const changeNickname = (evt: React.ChangeEvent<HTMLInputElement>) => setNickname(evt.target.value)
+	const changeGameCode = (evt: React.ChangeEvent<HTMLInputElement>) => setGameCode(Number(evt.target.value))
 	const bothInputsFilled = nickname && gameCode;
 
 	const enterGame = () => {
-		const fetchConfig = {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			method: "POST",
-			body: JSON.stringify({ nickname })
-		}
+		const endpoint = API_ROOT + `/user/${gameCode}/join`
+		const config = getPostConfig({ nickname })
 
-		fetch(API_ROOT + `/user/${gameCode}/join`, fetchConfig)
-			.then(res => {
-				if (res.status === 404) {
-					throw new Error(`Game code ${gameCode} doesn't exist.`)
-				} else if (res.ok) {
-					setErrorMsgs([])
-					return res.json()
+		try {
+			setFetch({
+				endpoint,
+				config,
+				callback: (data) => {
+					const {gameQuestions: questions, gameUsers, gameCode} = data;
+					const payload = {questions, gameUsers, gameCode, nickname}
+
+					questionsDispatch({ type: Q_TYPES.userJoins, payload });
+					navigate(`/game/${gameCode}/room`)
 				}
 			})
-			.then(data => {
-				const {gameQuestions: questions, gameUsers, gameCode} = data;
-				const payload = {questions, gameUsers, gameCode, nickname}
-
-				dispatch({ type: Q_TYPES.userJoins, payload });
-				navigate(`/game/${gameCode}/room`)
-			})
-			.catch(err => {
-				setErrorMsgs(prev => [
-					...prev,
-					err.message
-				]);
-			})
+		} catch (err) {
+			setErrorMsgs(prev => [
+				...prev,
+				(err as Error).message
+			]);
+		}
 	}
 
 	return (
