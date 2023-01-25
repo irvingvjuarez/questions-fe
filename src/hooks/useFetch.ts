@@ -5,15 +5,18 @@ import { useContext } from "react";
 
 export type UseFetch = {
 	endpoint: string;
-	config?: PostConfig;
 	callback(data: any): void
+	config?: PostConfig;
+	hideLoader?: boolean
 }
 
 export const useFetch = (): (props: UseFetch) => void => {
 	const { questionsDispatch } = useContext(questionsContext) as Questions
 
-	return ({endpoint, config, callback}: UseFetch) => {
-		questionsDispatch({ type: Q_TYPES.setLoading })
+	return ({endpoint, config, callback, hideLoader}: UseFetch) => {
+		if (!hideLoader) {
+			questionsDispatch({ type: Q_TYPES.setLoading })
+		}
 
 		fetch(endpoint, config ?? undefined)
 			.then(res => {
@@ -21,6 +24,10 @@ export const useFetch = (): (props: UseFetch) => void => {
 				return res.json()
 			}).then(data => {
 				callback(data)
+
+				if (!hideLoader) {
+					questionsDispatch({ type: Q_TYPES.removeLoading })
+				}
 			})
 	}
 }

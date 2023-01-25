@@ -27,6 +27,7 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 
 		try {
 			setFetch({
+				hideLoader: true,
 				endpoint,
 				callback: (data) => {
 					if (data.status.counterActive === false) {

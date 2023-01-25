@@ -5,6 +5,7 @@ import { useContext } from "react"
 
 export const LoaderFallback: React.FC<LoaderFallbackProps> = ({ children }) => {
 	const { loading } = useContext(questionsContext) as Questions
+	// console.log({ loading })
 
 	if (loading) return (
 		<div className="w-full h-[60vh] grid place-content-center">

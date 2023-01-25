@@ -13,7 +13,7 @@ export const useOptionsForm = () => {
 	const [correctOptionID, setCorrectOptionID] = useState<string | null>(null)
 
 	const {questionId} = useParams()
-	const {questions, questionsDispatch} = useContext(questionsContext) as Questions
+	const {questions, questionsDispatch, loading} = useContext(questionsContext) as Questions
 
 	const currentQuestionIndex = questions.findIndex(question => question.id == questionId)
 	const currentQuestion = questions[currentQuestionIndex]

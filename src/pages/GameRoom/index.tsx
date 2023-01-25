@@ -4,12 +4,15 @@ import { LoaderFallback } from "@app/containers/LoaderFallback"
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
+import { useFetch } from "@app/hooks/useFetch"
+import { getPostConfig } from "@app/services/getPostConfig"
 import { Action, Questions, User } from "@app/types"
 import { Fragment, useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
 	const validation = useErrorValidation()
+	const setFetch = useFetch()
 	let getUsersInterval: number
 
 	const navigate = useNavigate()
@@ -40,24 +43,24 @@ export const GameRoom = () => {
 	}
 
 	const startGame = () => {
-		const fetchConfig = {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			method: "POST"
-		}
+		const config = getPostConfig()
 
-		fetch(API_ROOT + `/game/${contextGameCode}/start`, fetchConfig)
-			.then(res => res.json())
-			.then(data => {
-				if (data.game.started) {
-					clearInterval(getUsersInterval)
-					questionsDispatch({ type: Q_TYPES.removeLoading })
+		try {
+			setFetch({
+				endpoint: API_ROOT + `/game/${contextGameCode}/start`,
+				config,
+				callback: (data) => {
+					if (data.game.started) {
+						clearInterval(getUsersInterval)
+						questionsDispatch({ type: Q_TYPES.removeLoading })
 
-					navigate(`/game/${contextGameCode}/current/question`);
+						navigate(`/game/${contextGameCode}/current/question`);
+					}
 				}
 			})
+		} catch (err) {
+			navigate("/")
+		}
 	}
 
 	useEffect(() => {
