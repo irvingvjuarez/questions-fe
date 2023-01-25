@@ -8,40 +8,38 @@ export const Options = () => {
 	const { currentQuestion, handleChecked, createGame, correctOptionID, addAnotherQuestion } = useOptionsForm()
 
 	return (
-		<section className="page-container">
-			<LoaderFallback>
-				<h2 className="subtitle mb-2 font-light">
-					Choose the correct option for the following question:
-				</h2>
+		<LoaderFallback>
+			<h2 className="subtitle mb-2 font-light">
+				Choose the correct option for the following question:
+			</h2>
 
-				<span className="highlighted">
-					{currentQuestion?.content}
-				</span>
+			<span className="highlighted">
+				{currentQuestion?.content}
+			</span>
 
-				<PossibleCorrectAnswers
-					answers={currentQuestion.answers}
-					handleChange={handleChecked}
-					questionContent={currentQuestion.content}
-				/>
+			<PossibleCorrectAnswers
+				answers={currentQuestion.answers}
+				handleChange={handleChecked}
+				questionContent={currentQuestion.content}
+			/>
 
-				<ButtonsContainer>
-					<Button
-						variant="active"
-						disabled={!correctOptionID}
-						handleClick={createGame}
-					>
-						Create Game!
-					</Button>
+			<ButtonsContainer>
+				<Button
+					variant="active"
+					disabled={!correctOptionID}
+					handleClick={createGame}
+				>
+					Create Game!
+				</Button>
 
-					<Button
-						variant="inactive"
-						disabled={!correctOptionID}
-						handleClick={addAnotherQuestion}
-					>
-						Add another question
-					</Button>
-				</ButtonsContainer>
-			</LoaderFallback>
-		</section>
+				<Button
+					variant="inactive"
+					disabled={!correctOptionID}
+					handleClick={addAnotherQuestion}
+				>
+					Add another question
+				</Button>
+			</ButtonsContainer>
+		</LoaderFallback>
 	)
 }

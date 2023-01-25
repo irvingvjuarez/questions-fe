@@ -1,7 +1,7 @@
 import { Loader } from "@app/components/Loader"
 import { questionsContext } from "@app/contexts/questions.context"
 import { Questions } from "@app/types"
-import { Fragment, useContext } from "react"
+import { useContext } from "react"
 
 export const LoaderFallback: React.FC<LoaderFallbackProps> = ({ children }) => {
 	const { loading } = useContext(questionsContext) as Questions
@@ -12,5 +12,9 @@ export const LoaderFallback: React.FC<LoaderFallbackProps> = ({ children }) => {
 		</div>
 	)
 
-	return <Fragment>{children}</Fragment>
+	return (
+		<section className="page-container">
+			{children}
+		</section>
+	)
 }

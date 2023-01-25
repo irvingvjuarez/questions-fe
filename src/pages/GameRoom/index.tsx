@@ -1,10 +1,11 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
+import { LoaderFallback } from "@app/containers/LoaderFallback"
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
 import { Action, Questions, User } from "@app/types"
-import { useContext, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const GameRoom = () => {
@@ -67,7 +68,7 @@ export const GameRoom = () => {
 	}, [])
 
 	return (
-		<section>
+		<LoaderFallback>
 			{user.isUser ? (
 				<h2 className="subtitle">
 					Waiting the owner to start the game...
@@ -103,17 +104,19 @@ export const GameRoom = () => {
 				)}
 			</article>
 
-			{!user.isUser && (
-				<ButtonsContainer>
-					<Button
-						variant="active"
-						handleClick={startGame}
-						disabled={currentUsers.length < 1}
-					>
-						Start Game!
-					</Button>
-				</ButtonsContainer>
-			)}
-		</section>
+			<Fragment>
+				{!user.isUser && (
+					<ButtonsContainer>
+						<Button
+							variant="active"
+							handleClick={startGame}
+							disabled={currentUsers.length < 1}
+						>
+							Start Game!
+						</Button>
+					</ButtonsContainer>
+				)}
+			</Fragment>
+		</LoaderFallback>
 	)
 }
