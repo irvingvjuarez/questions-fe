@@ -11,13 +11,16 @@ export type UseFetch = {
 
 export const useFetch = (): (props: UseFetch) => void => {
 	const { questionsDispatch } = useContext(questionsContext) as Questions
-	questionsDispatch({ type: Q_TYPES.setLoading })
 
-	return async ({endpoint, config, callback}: UseFetch) => {
-		const res = await fetch(endpoint, config ?? undefined)
-		if (!res.ok) throw new Error()
+	return ({endpoint, config, callback}: UseFetch) => {
+		questionsDispatch({ type: Q_TYPES.setLoading })
 
-		const data = await res.json()
-		callback(data)
+		fetch(endpoint, config ?? undefined)
+			.then(res => {
+				if(!res.ok) throw new Error()
+				return res.json()
+			}).then(data => {
+				callback(data)
+			})
 	}
 }
