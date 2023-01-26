@@ -92,10 +92,12 @@ test.describe("Making sure the whole game process works fine", () => {
 				await page.click("label[tabindex='4']")
 				await createGameBtn.click()
 
-				await page.waitForTimeout(1000)
-				expect(page.url()).toMatch("/room")
+				await page.waitForSelector("span.highlighted")
 
-				// gameCode = page.$eval("span.highlighted", (el) => el.textContent)
+				gameCode = await page.$eval("span.highlighted", (el) => el.textContent)
+				console.log({ gameCode })
+
+				expect(page.url()).toMatch("/room")
 			}
 		}
 
