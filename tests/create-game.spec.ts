@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { chromium } from "@playwright/test"
 
+let browser, newpage, gameCode
+const characterName = "Vladi"
+
 const questions = [
 	{
 		content: "First question",
@@ -46,10 +49,12 @@ const questions = [
 	}
 ]
 
-
+test.beforeAll(async () => {
+	browser = await chromium.launch()
+	newpage = await browser.newPage()
+})
 
 test.describe("Making sure the whole game process works fine", () => {
-	let gameCode
 
 	test("Making sure the game can be created", async ({ page }) => {
 		await page.goto('/');
@@ -103,11 +108,7 @@ test.describe("Making sure the whole game process works fine", () => {
 			}
 		}
 
-		// Launching the new browser to emulate user
-		const browser = await chromium.launch()
-		const newpage = await browser.newPage()
-		const characterName = "Vladi"
-
+		// Using the second browser
 		await newpage.goto("/game/code")
 		const enterGameBtn = newpage.locator("button")
 
