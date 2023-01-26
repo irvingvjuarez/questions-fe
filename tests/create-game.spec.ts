@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { chromium } from "@playwright/test"
 
 const questions = [
 	{
@@ -44,6 +45,8 @@ const questions = [
 		]
 	}
 ]
+
+
 
 test.describe("Making sure the whole game process works fine", () => {
 	let gameCode
@@ -92,30 +95,31 @@ test.describe("Making sure the whole game process works fine", () => {
 				await page.click("label[tabindex='4']")
 				await createGameBtn.click()
 
+				await page.waitForTimeout(1000)
 				await page.waitForSelector("span.highlighted")
-
 				gameCode = await page.$eval("span.highlighted", (el) => el.textContent)
-				console.log({ gameCode })
 
 				expect(page.url()).toMatch("/room")
 			}
 		}
 
+		// Launching the new browser to emulate user
+		const browser = await chromium.launch()
+		const newpage = await browser.newPage()
+		const characterName = "Vladi"
 
-		// test.describe("Making sure the user is able to join the game", () => {
-		// 	test("Entering the correct game code", async ({ page }) => {
-		// 		await page.goto("/game/code")
-		// 		const btn = page.getByText("Enter to the Game!")
+		await newpage.goto("/game/code")
+		const enterGameBtn = newpage.locator("button")
 
-		// 		expect(btn).toBeDisabled()
+		await newpage.type("input[type='number']", gameCode)
+		await newpage.type("input[type='text']", characterName)
 
-		// 		await page.type("input[type='number']", gameCode)
-		// 		await page.type("input[type='text']", "Vladi")
+		expect(enterGameBtn).not.toBeDisabled()
+		await enterGameBtn.click()
 
-		// 		expect(btn).not.toBeDisabled()
-		// 	})
-		// })
-
+		await newpage.waitForSelector("h2.subtitle")
+		const character = newpage.getByText(characterName + " (You)")
+		expect(character).toBeVisible()
 	})
 
 })
