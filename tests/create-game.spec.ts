@@ -1,7 +1,7 @@
-import { test, expect, BrowserType, Browser, Page } from '@playwright/test';
+import { test, expect, Browser, Page } from '@playwright/test';
 import { chromium } from "@playwright/test"
 
-const characterName = "Vladi"
+const users: any[] = []
 let gameCode, adminPage, userPage, user2Page
 
 const browsers: Array<{name: string; browser: Browser | undefined; page: Page | undefined}> = [{
@@ -68,6 +68,16 @@ test.beforeAll(async () => {
 	adminPage = browsers[0].page as Page
 	userPage = browsers[1].page as Page
 	user2Page = browsers[2].page as Page
+
+	users.push(
+		{
+			page: userPage,
+			name: "Timon"
+		}, {
+			page: user2Page,
+			name: "Pumba"
+		}
+	)
 })
 
 test.afterAll(() => {
@@ -130,19 +140,24 @@ test.describe("Making sure the whole game process works fine", () => {
 			}
 		}
 
-		// Using the second browser
-		await userPage.goto("/game/code")
-		const enterGameBtn = userPage.locator("button")
+		// Users entering into the game
+		for(let userIndex in users) {
+			const currentUser = users[userIndex]
+			const currentPage = currentUser.page
 
-		await userPage.type("input[type='number']", gameCode)
-		await userPage.type("input[type='text']", characterName)
+			await currentPage.goto("/game/code")
+			const enterGameBtn = currentPage.locator("button")
 
-		expect(enterGameBtn).not.toBeDisabled()
-		await enterGameBtn.click()
+			await currentPage.type("input[type='number']", gameCode)
+			await currentPage.type("input[type='text']", currentUser.name)
 
-		await userPage.waitForSelector("h2.subtitle")
-		const character = userPage.getByText(characterName + " (You)")
-		expect(character).toBeVisible()
+			expect(enterGameBtn).not.toBeDisabled()
+			await enterGameBtn.click()
+
+			await currentPage.waitForSelector("h2.subtitle")
+			const character = currentPage.getByText(currentUser.name + " (You)")
+			expect(character).toBeVisible()
+		}
 	})
 
 })
