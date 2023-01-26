@@ -158,6 +158,11 @@ test.describe("Making sure the whole game process works fine", () => {
 			const character = currentPage.getByText(currentUser.name + " (You)")
 			expect(character).toBeVisible()
 		}
+
+		// Making sure the admin can see all the users in the waiting room
+		for(let user of users) {
+			expect(adminPage.getByText(user.name)).toBeVisible()
+		}
 	})
 
 })
