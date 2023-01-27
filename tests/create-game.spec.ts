@@ -179,14 +179,28 @@ test.describe("Making sure the whole game process works fine", () => {
 
 			for(let user of users) {
 				await user.page.click(".option-0")
-				// await user.page.waitForSelector("img[alt='User Result']")
 			}
 
-			expect(userPage.locator("img[alt='User Result']")).toBeVisible()
-			expect(user2Page.locator("img[alt='User Result']")).toBeVisible()
+			for(let user of users) {
+				expect(user.page.locator("img[alt='User Result']")).toBeVisible()
+			}
 
 			await adminPage.waitForTimeout(1000)
 		}
+
+		// await adminPage.waitForTimeout(1000)
+
+		// // Finishing the game
+		// await adminPage.getByText("Next Question").click()
+
+		// await adminPage.waitForSelector("button")
+		// const finishGameBtn = adminPage.getByText("Finish Game!")
+		// expect(finishGameBtn).toBeVisible()
+
+		// expect(userPage.getByText("Questionnaire finished")).toBeVisible()
+		// expect(user2Page.getByText("Questionnaire finished")).toBeVisible()
+
+		// await finishGameBtn.click()
 	})
 
 })
