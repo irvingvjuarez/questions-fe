@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 export const UserResults = () => {
 	const validation = useErrorValidation()
 	const navigate = useNavigate()
-	let gameRestartedInterval: number
+	let gameRestartedInterval: NodeJS.Timer
 
 	const { answeredQuestion, user: {nickname}, questionsDispatch, gameCode } = useContext(questionsContext) as Questions
 
@@ -70,7 +70,7 @@ export const UserResults = () => {
 			<p>
 				Current points:
 				<span className="highlighted">
-					{userData?.userScore}
+					{userData?.userScore || 0}
 				</span>
 			</p>
 		</section>
