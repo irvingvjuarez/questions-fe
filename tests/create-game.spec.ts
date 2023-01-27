@@ -162,12 +162,31 @@ test.describe("Making sure the whole game process works fine", () => {
 			expect(character).toBeVisible()
 		}
 
+		await adminPage.waitForTimeout(200)
 		expect(startGameBtn).not.toBeDisabled()
 
 		// Making sure the admin can see all the users in the waiting room
 		for(let user of users) {
 			expect(adminPage.getByText(user.name)).toBeVisible()
 		}
+
+		// Starting the game
+		await startGameBtn.click()
+		await adminPage.waitForSelector(".page-container > article")
+
+		for(let user of users) {
+			await user.page.click(".option-0")
+		}
+
+		await adminPage.waitForTimeout(1000)
+		const nextQuestionBtn = adminPage.getByText("Next Question")
+
+		// TODO: Expecting some elements from user page
+
+		expect(nextQuestionBtn).toBeVisible()
+		await nextQuestionBtn.click()
+
+		await adminPage.waitForSelector(".page-container > article")
 	})
 
 })
