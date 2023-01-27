@@ -2,7 +2,7 @@ import { test, expect, Browser, Page } from '@playwright/test';
 import { chromium } from "@playwright/test"
 
 const users: any[] = []
-let gameCode, adminPage, userPage, user2Page
+let gameCode, adminPage, userPage, user2Page, startGameBtn
 
 const browsers: Array<{name: string; browser: Browser | undefined; page: Page | undefined}> = [{
 		name: "admin", browser: undefined, page: undefined
@@ -137,6 +137,9 @@ test.describe("Making sure the whole game process works fine", () => {
 				gameCode = await adminPage.$eval("span.highlighted", (el) => el.textContent)
 
 				expect(adminPage.url()).toMatch("/room")
+
+				startGameBtn = adminPage.getByText("Start Game!")
+				expect(startGameBtn).toBeDisabled()
 			}
 		}
 
@@ -158,6 +161,8 @@ test.describe("Making sure the whole game process works fine", () => {
 			const character = currentPage.getByText(currentUser.name + " (You)")
 			expect(character).toBeVisible()
 		}
+
+		expect(startGameBtn).not.toBeDisabled()
 
 		// Making sure the admin can see all the users in the waiting room
 		for(let user of users) {
