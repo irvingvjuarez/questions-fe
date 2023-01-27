@@ -63,7 +63,7 @@ export const UserResults = () => {
 				<img
 					className="block w-[150px]"
 					src={isUserRight ? right : wrong}
-					alt=""
+					alt="User Result"
 				/>
 			</div>
 

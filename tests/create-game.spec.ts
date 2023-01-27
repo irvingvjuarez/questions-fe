@@ -181,7 +181,9 @@ test.describe("Making sure the whole game process works fine", () => {
 		await adminPage.waitForTimeout(1000)
 		const nextQuestionBtn = adminPage.getByText("Next Question")
 
-		// TODO: Expecting some elements from user page
+		// Expecting some elements from the users pages
+		expect(userPage.locator("img[alt='User Result']")).toBeVisible
+		expect(user2Page.locator("img[alt='User Result']")).toBeVisible
 
 		expect(nextQuestionBtn).toBeVisible()
 		await nextQuestionBtn.click()
