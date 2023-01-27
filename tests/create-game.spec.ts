@@ -170,25 +170,23 @@ test.describe("Making sure the whole game process works fine", () => {
 			expect(adminPage.getByText(user.name)).toBeVisible()
 		}
 
-		// Starting the game
-		await startGameBtn.click()
-		await adminPage.waitForSelector(".page-container > article")
+		// Triggering game
+		for(let i = 0; i < questions.length; i++){
+			let triggerBtn = adminPage.getByText(i === 0 ? "Start Game!" : "Next Question")
+			await triggerBtn.click()
 
-		for(let user of users) {
-			await user.page.click(".option-0")
+			await adminPage.waitForSelector(".page-container > article")
+
+			for(let user of users) {
+				await user.page.click(".option-0")
+				// await user.page.waitForSelector("img[alt='User Result']")
+			}
+
+			expect(userPage.locator("img[alt='User Result']")).toBeVisible()
+			expect(user2Page.locator("img[alt='User Result']")).toBeVisible()
+
+			await adminPage.waitForTimeout(1000)
 		}
-
-		await adminPage.waitForTimeout(1000)
-		const nextQuestionBtn = adminPage.getByText("Next Question")
-
-		// Expecting some elements from the users pages
-		expect(userPage.locator("img[alt='User Result']")).toBeVisible
-		expect(user2Page.locator("img[alt='User Result']")).toBeVisible
-
-		expect(nextQuestionBtn).toBeVisible()
-		await nextQuestionBtn.click()
-
-		await adminPage.waitForSelector(".page-container > article")
 	})
 
 })
