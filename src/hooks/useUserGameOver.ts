@@ -17,7 +17,7 @@ export const useUserGameOver = () => {
 		navigate("/")
 	}
 
-	const { message } = getGameOverMsgs()
+	const { message } = getGameOverMsgs(scoreIndex)
 
 	return { scoreIndex, message, score, quitGame }
 }
