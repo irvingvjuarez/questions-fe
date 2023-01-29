@@ -1,6 +1,6 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT, Q_TYPES } from "@app/globals"
-import { Questions, Score } from "@app/types"
+import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useErrorValidation } from "./useErrorValidation"

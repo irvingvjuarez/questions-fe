@@ -3,21 +3,16 @@ import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { WinnerTable } from "@app/containers/WinnerTable"
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT } from "@app/globals"
+import { useFetch } from "@app/hooks/useFetch"
+import { getPostConfig } from "@app/services/getPostConfig"
 import { Questions } from "@app/types"
 import { Fragment, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-const fetchConfig = {
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  method: "POST"
-}
-
 export const GameOverAdmin = () => {
+	const setFetch = useFetch()
 	const navigate = useNavigate()
-	let deleteGameTimeout: number | null
+	let deleteGameTimeout: NodeJS.Timeout | null
 
 	const { gameCode } = useContext(questionsContext) as Questions
 
@@ -30,20 +25,21 @@ export const GameOverAdmin = () => {
 	}
 
 	const finishGame = () => {
-		fetch(API_ROOT + `/game/${gameCode}/delete`, fetchConfig)
-			.then(res => {
-				if (!res.ok) throw new Error()
-				return res.json()
-			})
-			.then(data => {
-				if (data.deletedGame) {
-					clearTimeout(deleteGameTimeout as number)
-					deleteGameTimeout = null
-				} else {
-					throw new Error()
+		const config = getPostConfig()
+		try {
+			setFetch({
+				endpoint: API_ROOT + `/game/${gameCode}/delete`,
+				config,
+				callback: (data) => {
+					if (data.deletedGame) {
+						clearTimeout(deleteGameTimeout as NodeJS.Timeout)
+						deleteGameTimeout = null
+					}
 				}
 			})
-			.catch((err) => console.log(err))
+		} catch (err) {
+			navigate("/")
+		}
 	}
 
 	useEffect(() => {
