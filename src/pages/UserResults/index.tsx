@@ -7,43 +7,44 @@ import wrong from "@app/assets/wrong.png"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
 import { API_ROOT, Q_TYPES } from "@app/globals"
 import { useNavigate } from "react-router-dom"
+import { useFetch } from "@app/hooks/useFetch"
 
 export const UserResults = () => {
+	const setFetch = useFetch()
 	const validation = useErrorValidation()
 	const navigate = useNavigate()
 	let gameRestartedInterval: NodeJS.Timer
 
 	const { answeredQuestion, user: {nickname}, questionsDispatch, gameCode } = useContext(questionsContext) as Questions
 
-	const dispatch = questionsDispatch as React.Dispatch<Action>
-
 	const isUserRight = answeredQuestion?.isUserCorrect
 
 	const userData = answeredQuestion?.answeredBy.find(user => user.userNickname == nickname)
 
 	const isGameRestarted = () => {
-		fetch(API_ROOT + `/game/${gameCode}/current/question/full/status`)
-			.then(res => {
-				if (!res.ok) throw new Error()
-				return res.json()
-			})
-			.then(data => {
-				let navigateEndpoint
+		try {
+			setFetch({
+				endpoint: API_ROOT + `/game/${gameCode}/current/question/full/status`,
+				callback: (data) => {
+					let navigateEndpoint
 
-				if (data.isGameOver) navigateEndpoint = `/game/${gameCode}/over`
-				if (data.status.counterActive) navigateEndpoint = `/game/${gameCode}/current/question`
+					if (data.isGameOver) navigateEndpoint = `/game/${gameCode}/over`
+					if (data.status.counterActive) navigateEndpoint = `/game/${gameCode}/current/question`
 
-				if (navigateEndpoint) {
-					dispatch({
-						type: Q_TYPES.clearAnsweredQuestion,
-						payload: { score: data.sortedScore }
-					})
+					if (navigateEndpoint) {
+						questionsDispatch({
+							type: Q_TYPES.clearAnsweredQuestion,
+							payload: { score: data.sortedScore }
+						})
 
-					clearInterval(gameRestartedInterval)
-					navigate(navigateEndpoint)
+						clearInterval(gameRestartedInterval)
+						navigate(navigateEndpoint)
+					}
 				}
 			})
-			.catch(() => navigate("/"))
+		} catch(err) {
+			navigate("/")
+		}
 	}
 
 	useEffect(() => {
