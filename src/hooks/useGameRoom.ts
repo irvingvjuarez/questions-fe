@@ -35,7 +35,9 @@ export const useGameRoom = () => {
 						navigate(`/game/${contextGameCode}/current/question`)
 					}
 
-					setCurrentUsers(newUsers)
+					if (currentUsers.length < newUsers.length) {
+						setCurrentUsers(newUsers)
+					}
 				}
 			})
 		} catch (err) {

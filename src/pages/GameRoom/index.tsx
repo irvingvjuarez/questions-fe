@@ -1,7 +1,6 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { GameRoomList } from "@app/containers/GameRoomList"
-import { LoaderFallback } from "@app/containers/LoaderFallback"
 import { useGameRoom } from "@app/hooks/useGameRoom"
 import { Fragment } from "react"
 
@@ -9,7 +8,7 @@ export const GameRoom = () => {
 	const { user, paramGameCode, currentUsers, startGame } = useGameRoom()
 
 	return (
-		<LoaderFallback>
+		<section className="page-container">
 			{user.isUser ? (
 				<h2 className="subtitle">
 					Waiting the owner to start the game...
@@ -49,6 +48,6 @@ export const GameRoom = () => {
 					</ButtonsContainer>
 				)}
 			</Fragment>
-		</LoaderFallback>
+		</section>
 	)
 }
