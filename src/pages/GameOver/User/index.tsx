@@ -1,42 +1,13 @@
-import { questionsContext } from "@app/contexts/questions.context"
-import { Questions, Score, User } from "@app/types"
-import { Fragment, useContext, useEffect } from "react"
-
+import { Fragment } from "react"
 import winner from "@app/assets/trophy.png"
 import loser from "@app/assets/disappointed.png"
+
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
-import { useNavigate } from "react-router-dom"
-import { Q_TYPES } from "@app/globals"
+import { useUserGameOver } from "@app/hooks/useUserGameOver"
 
 export const GameOverUser = () => {
-	const navigate = useNavigate()
-	const { user, score, questionsDispatch } = useContext(questionsContext) as Questions
-	const nickname = user.nickname
-	const scoreIndex = score.findIndex(item => item.nickname == nickname)
-	const quitGame = () => {
-		questionsDispatch({ type: Q_TYPES.clearGame })
-		navigate("/")
-	}
-
-	let position = "", message
-
-	switch (scoreIndex) {
-		case 0:
-			position = "first"
-			break;
-		case 1:
-			position = "second"
-			break;
-		case 2:
-			position = "third"
-			break;
-	}
-
-	message = scoreIndex <= 2
-		? `You got ${position} place, Congrats!`
-		: "You were not that fast this time. Good luck the next time"
-
+	const { scoreIndex, message, score, quitGame } = useUserGameOver()
 
 	return (
 		<Fragment>
