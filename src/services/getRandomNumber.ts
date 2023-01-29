@@ -1,0 +1,1 @@
+export const getRandomNumber = (size: number = 8) => Math.random().toString(size)

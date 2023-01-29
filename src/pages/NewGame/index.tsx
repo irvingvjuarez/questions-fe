@@ -5,35 +5,19 @@ import { Input } from "@app/components/Input"
 import React, { useContext, useState } from "react"
 import { MAX_ANSWERS, Q_TYPES } from "@app/globals"
 import { questionsContext } from "@app/contexts/questions.context"
-import { Action, Question, Questions } from "@app/types"
+import { Action, NewGameInput, Question, Questions } from "@app/types"
 import { useNavigate } from "react-router-dom"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList"
-
-type NewGameInput = {
-	label: string;
-	ref: React.MutableRefObject<HTMLInputElement | null>;
-	name: string;
-	handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
-	value: string;
-}
+import { getInitialInputs } from "./utils/getInitialInputs"
+import { getSingleInput } from "./utils/getSingleInput"
+import { getRandomNumber } from "@app/services/getRandomNumber"
 
 export const NewGame = () => {
 	const navigate = useNavigate()
+	const { questionsDispatch } = useContext(questionsContext) as Questions
+
 	const [errorMsgs, setErrorMsgs] = useState<string[]>([])
-	const [inputs, setInputs] = useState<NewGameInput[]>([
-		{
-			label: "Type your question:",
-			ref: React.createRef<HTMLInputElement | null>(),
-			name: "questionInput",
-			value: ""
-		},
-		{
-			label: "Add answer's option:",
-			ref: React.createRef<HTMLInputElement | null>(),
-			name: "answerInput",
-			value: ""
-		}
-	])
+	const [inputs, setInputs] = useState<NewGameInput[]>(getInitialInputs())
 
 	const updateInputs = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const {name} = evt.target;
@@ -48,31 +32,20 @@ export const NewGame = () => {
 
 	const addNewInput = () => {
 		if (inputs.length >= MAX_ANSWERS) {
-			setErrorMsgs(prev => [
-				...prev,
-				"Four maximum possible answers"
-			])
+			const newErrorMsg = "Four maximum possible answers"
+			setErrorMsgs(prev => [ ...prev, newErrorMsg ])
 		} else {
-			setInputs(prev => [
-				...prev,
-				{
-					label: "",
-					ref: React.createRef<HTMLInputElement | null>(),
-					name: "answer" + inputs.length,
-					value: ""
-				}
-			])
+			const newInput = getSingleInput(inputs.length)
+			setInputs(prev => [ ...prev, newInput ])
 		}
 	}
 
 	const disabledButtons = inputs.some(input => !Boolean(input.value))
 
-	const questionsValue = useContext(questionsContext) as Questions
-	const dispatch = questionsValue.questionsDispatch as React.Dispatch<Action>
 
 	const addNewQuestion = () => {
 		const question: Question = {
-			id: Math.random().toString(12),
+			id: getRandomNumber(12),
 			content: null,
 			answers: [],
 			correctAnswer: null,
@@ -85,7 +58,7 @@ export const NewGame = () => {
 				question.content = input.value
 			} else {
 				const option = {
-					id: Math.random().toString(12),
+					id: getRandomNumber(12),
 					content: input.value
 				}
 
@@ -93,7 +66,7 @@ export const NewGame = () => {
 			}
 		})
 
-		dispatch({ type: Q_TYPES.addQuestion, payload: question })
+		questionsDispatch({ type: Q_TYPES.addQuestion, payload: question })
 
 		navigate(`/questions/${question.id}/options`)
 	}

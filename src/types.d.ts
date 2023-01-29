@@ -90,3 +90,11 @@ export type PostConfig = {
 	method: "POST",
 	body: string | null
 }
+
+export type NewGameInput = {
+	label: string;
+	ref: React.MutableRefObject<HTMLInputElement | null>;
+	name: string;
+	handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
+}
