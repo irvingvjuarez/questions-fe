@@ -1,5 +1,6 @@
 import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
+import { GameRoomList } from "@app/containers/GameRoomList"
 import { LoaderFallback } from "@app/containers/LoaderFallback"
 import { useGameRoom } from "@app/hooks/useGameRoom"
 import { Fragment } from "react"
@@ -31,16 +32,7 @@ export const GameRoom = () => {
 						This game room is currently empty.
 					</span>
 				) : (
-					<div className="w-full flex h-[inherit] py-2 space-x-1">
-						{currentUsers.map(user => (
-							<span
-								key={user.nickname}
-								className="bg-white text-background-dark font-semibold p-1 rounded-xl h-fit"
-							>
-								{user.nickname}
-							</span>
-						))}
-					</div>
+					<GameRoomList list={currentUsers} />
 				)}
 			</article>
 
