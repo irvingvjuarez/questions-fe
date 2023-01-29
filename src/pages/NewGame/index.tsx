@@ -1,7 +1,6 @@
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { Button } from "@app/components/Button"
 import { Form } from "@app/containers/Form"
-import { Input } from "@app/components/Input"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList"
 import { useNewGame } from "@app/hooks/useNewGame"
 import { NewGameInputList } from "@app/containers/NewGameInputLlist"

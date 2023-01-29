@@ -1,35 +1,38 @@
 import { questionsContext } from "@app/contexts/questions.context"
 import { API_ROOT } from "@app/globals"
 import { useErrorValidation } from "@app/hooks/useErrorValidation"
+import { useFetch } from "@app/hooks/useFetch"
 import { Questions } from "@app/types"
 import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const UserScore = () => {
-	let questionResolvedInterval: number
+	let questionResolvedInterval: NodeJS.Timer
 
+	const setFetch = useFetch()
 	const navigate = useNavigate()
 	const validation = useErrorValidation()
 	const { answeredQuestion, gameCode } = useContext(questionsContext) as Questions
 
 	const showResults = () => {
-		fetch(API_ROOT + `/game/${gameCode}/current/question/resolved`)
-			.then(res => {
-				if (!res.ok) {
-					throw new Error()
+		try {
+			setFetch({
+				endpoint: API_ROOT + `/game/${gameCode}/current/question/resolved`,
+				callback: (data) => {
+					let navigateTo: string = ""
+
+					if (data.isGameOver) {
+						navigateTo = `/game/${gameCode}/over`
+					} else if (data.isQuestionResolved) {
+						navigateTo = `/game/${gameCode}/user/current/results`
+					}
+
+					if (Boolean(navigateTo)) navigate(navigateTo)
 				}
-				return res.json()
 			})
-			.then(data => {
-				if (data.isGameOver) {
-					navigate(`/game/${gameCode}/over`)
-				}else if (data.isQuestionResolved) {
-					navigate(`/game/${gameCode}/user/current/results`)
-				}
-			})
-			.catch(() => {
-				navigate("/")
-			})
+		} catch(err) {
+			navigate("/")
+		}
 	}
 
 	useEffect(() => {
