@@ -162,7 +162,7 @@ test.describe("Making sure the whole game process works fine", () => {
 			expect(character).toBeVisible()
 		}
 
-		await adminPage.waitForTimeout(500)
+		await adminPage.waitForTimeout(1000)
 		expect(startGameBtn).not.toBeDisabled()
 
 		// Making sure the admin can see all the users in the waiting room
