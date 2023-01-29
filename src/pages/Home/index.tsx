@@ -10,7 +10,7 @@ export const Home = () => {
 	useEffect(() => questionsDispatch({ type: Q_TYPES.clearQuestions }), [])
 
 	return (
-		<main className="h-[76vh] flex flex-col justify-between">
+		<section className="page-container h-[76vh] flex flex-col justify-between">
 			<h3 className="subtitle">
 				Create questionnaries easily, quickly and for free.
 			</h3>
@@ -24,6 +24,8 @@ export const Home = () => {
 					Enter Game Code
 				</Button>
 			</ButtonsContainer>
-		</main>
+		</section>
+		// <main className="h-[76vh] flex flex-col justify-between">
+		// </main>
 	)
 }
