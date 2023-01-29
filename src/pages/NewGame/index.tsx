@@ -4,6 +4,7 @@ import { Form } from "@app/containers/Form"
 import { Input } from "@app/components/Input"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList"
 import { useNewGame } from "@app/hooks/useNewGame"
+import { NewGameInputList } from "@app/containers/NewGameInputLlist"
 
 export const NewGame = () => {
 	const { inputs, errorMsgs, addNewQuestion, disabledButtons, addNewInput, updateInputs } = useNewGame()
@@ -11,18 +12,10 @@ export const NewGame = () => {
 	return (
 		<section className="page-container">
 			<Form>
-				<>
-					{inputs.map(input => (
-						<Input
-							key={input.name}
-							ref={input.ref}
-							name={input.name}
-							handleChange={updateInputs}
-						>
-							{input.label}
-						</Input>
-					))}
-				</>
+				<NewGameInputList
+					list={inputs}
+					changeHandler={updateInputs}
+				/>
 
 				<ErrorMsgList list={errorMsgs} />
 			</Form>
