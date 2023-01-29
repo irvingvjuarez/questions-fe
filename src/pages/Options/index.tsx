@@ -24,15 +24,16 @@ export const Options = () => {
 
 			<ButtonsContainer>
 				<Button
-					variant="active"
+					variant="inactive"
 					disabled={!correctOptionID}
 					handleClick={createGame}
+					containerCss="text-xl"
 				>
 					Create Game!
 				</Button>
 
 				<Button
-					variant="inactive"
+					variant="active"
 					disabled={!correctOptionID}
 					handleClick={addAnotherQuestion}
 				>

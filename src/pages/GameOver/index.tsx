@@ -7,6 +7,12 @@ export const GameOver = () => {
 
 	return (
 		<section className="page-container h-[70vh] flex flex-col justify-between">
+			{!user.isUser && (
+				<h2 className="subtitle">
+					Final Positions: First 3 positions.
+				</h2>
+			)}
+
 			{user.isUser ?
 				<GameOverUser />
 				:
