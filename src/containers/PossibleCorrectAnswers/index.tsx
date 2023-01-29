@@ -5,7 +5,7 @@ export const PossibleCorrectAnswers: React.FC<PossibleCorrectAnswersProps> = ({ 
 	const { hoverOption } = useKeypress()
 
 	return (
-		<ul className="my-4 p-3 flex flex-col space-y-3">
+		<ul className="my-4 py-3 flex flex-col space-y-3">
 			{answers.map(({ id, content }, index) => (
 				<li key={id} className="rounded-lg bg-background-dark">
 					<input

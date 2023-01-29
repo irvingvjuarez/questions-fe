@@ -89,7 +89,7 @@ body {
 }
 
 .page-container {
-	@apply w-[90%] max-w-lg mx-auto;
+	@apply w-[90%] max-w-xl mx-auto;
 }
 
 .subtitle {

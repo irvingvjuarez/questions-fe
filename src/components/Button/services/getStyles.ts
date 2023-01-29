@@ -1,4 +1,4 @@
-const baseCss = "rounded-lg py-2 btn"
+const baseCss = "rounded-lg py-2 btn h-full"
 
 export const getStyles = (variant: string = "", containerCss?: string) => {
 	let complementaryCss = ""

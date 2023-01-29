@@ -22,15 +22,16 @@ export const NewGame = () => {
 			<ButtonsContainer>
 				<Button
 					handleClick={addNewQuestion}
-					variant="active"
+					variant="inactive"
 					disabled={disabledButtons}
+					containerCss="text-xl"
 				>
 					GO!
 				</Button>
 
 				<Button
 					handleClick={addNewInput}
-					variant="inactive"
+					variant="active"
 					disabled={errorMsgs.length > 0 ? true : disabledButtons}
 				>
 					Add another answer option
