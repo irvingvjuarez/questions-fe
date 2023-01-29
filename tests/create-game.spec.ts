@@ -162,7 +162,7 @@ test.describe("Making sure the whole game process works fine", () => {
 			expect(character).toBeVisible()
 		}
 
-		await adminPage.waitForTimeout(200)
+		await adminPage.waitForTimeout(500)
 		expect(startGameBtn).not.toBeDisabled()
 
 		// Making sure the admin can see all the users in the waiting room
@@ -171,36 +171,37 @@ test.describe("Making sure the whole game process works fine", () => {
 		}
 
 		// Triggering game
-		for(let i = 0; i < questions.length; i++){
+		for(let i = 0; i <= questions.length; i++){
 			let triggerBtn = adminPage.getByText(i === 0 ? "Start Game!" : "Next Question")
 			await triggerBtn.click()
 
-			await adminPage.waitForSelector(".page-container > article")
+			// Normal workflow
+			if (i < questions.length) {
+				await adminPage.waitForSelector(".page-container > article")
 
-			for(let user of users) {
-				await user.page.click(".option-0")
-			}
+				for(let user of users) {
+					await user.page.click(".option-0")
+				}
 
-			for(let user of users) {
-				expect(user.page.locator("img[alt='User Result']")).toBeVisible()
+				await adminPage.waitForTimeout(1000)
+
+				for(let user of users) {
+					expect(user.page.locator("img[alt='User Result']")).toBeVisible()
+				}
+			} else { // Ending the game
+				await adminPage.waitForSelector("button")
+				const finishGameBtn = adminPage.getByText("Finish Game!")
+				expect(finishGameBtn).toBeVisible()
+
+				expect(userPage.getByText("Questionnaire finished")).toBeVisible()
+				expect(user2Page.getByText("Questionnaire finished")).toBeVisible()
+
+				await finishGameBtn.click()
 			}
 
 			await adminPage.waitForTimeout(1000)
 		}
 
-		// await adminPage.waitForTimeout(1000)
-
-		// // Finishing the game
-		// await adminPage.getByText("Next Question").click()
-
-		// await adminPage.waitForSelector("button")
-		// const finishGameBtn = adminPage.getByText("Finish Game!")
-		// expect(finishGameBtn).toBeVisible()
-
-		// expect(userPage.getByText("Questionnaire finished")).toBeVisible()
-		// expect(user2Page.getByText("Questionnaire finished")).toBeVisible()
-
-		// await finishGameBtn.click()
 	})
 
 })
