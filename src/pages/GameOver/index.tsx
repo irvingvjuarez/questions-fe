@@ -1,15 +1,9 @@
-import { questionsContext } from "@app/contexts/questions.context"
-import { useErrorValidation } from "@app/hooks/useErrorValidation"
-import { Questions } from "@app/types"
-import { useContext, useEffect } from "react"
+import { useGameOver } from "@app/hooks/useGameOver"
 import { GameOverAdmin } from "./Admin"
 import { GameOverUser } from "./User"
 
 export const GameOver = () => {
-	const validation = useErrorValidation()
-	const { user } = useContext(questionsContext) as Questions
-
-	useEffect(() => validation(), [])
+	const { user } = useGameOver()
 
 	return (
 		<section className="page-container h-[70vh] flex flex-col justify-between">
