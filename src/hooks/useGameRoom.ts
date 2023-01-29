@@ -67,7 +67,7 @@ export const useGameRoom = () => {
 	}
 
 	useEffect(() => {
-		// validation()
+		validation()
 		getUsersInterval = setInterval(fetchUsers, 1000)
 
 		return () => clearInterval(getUsersInterval)

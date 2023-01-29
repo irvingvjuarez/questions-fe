@@ -25,7 +25,7 @@ export const GameRoom = () => {
 				</>
 			)}
 
-			<article className="border-2 border-white w-[90%] mx-auto h-[60vh] my-3 flex justify-center items-center p-3">
+			<article className="border-2 border-white w-full mx-auto h-[60vh] my-3 flex justify-center items-center p-3">
 				{currentUsers.length < 1 ? (
 					<span>
 						This game room is currently empty.

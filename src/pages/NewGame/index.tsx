@@ -21,20 +21,20 @@ export const NewGame = () => {
 
 			<ButtonsContainer>
 				<Button
+					handleClick={addNewInput}
+					variant="active"
+					disabled={errorMsgs.length > 0 ? true : disabledButtons}
+				>
+					Add another answer option
+				</Button>
+
+				<Button
 					handleClick={addNewQuestion}
 					variant="inactive"
 					disabled={disabledButtons}
 					containerCss="text-xl"
 				>
 					GO!
-				</Button>
-
-				<Button
-					handleClick={addNewInput}
-					variant="active"
-					disabled={errorMsgs.length > 0 ? true : disabledButtons}
-				>
-					Add another answer option
 				</Button>
 			</ButtonsContainer>
 		</section>
