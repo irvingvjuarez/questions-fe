@@ -105,9 +105,11 @@ test.describe("Making sure the whole game process works fine", () => {
 
 			for(let index in question.options) {
 				const option = question.options[index]
-
 				await adminPage.type(option.selector, option.content)
-				await addOptionBtn.click()
+
+				if (Number(index) < question.options.length - 1) {
+					await addOptionBtn.click()
+				}
 			}
 
 			const goBtn = adminPage.getByText("GO!")
