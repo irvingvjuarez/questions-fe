@@ -2,19 +2,26 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { ScoreTable } from "@app/containers/ScoreTable"
 import { useCurrentScore } from "@app/hooks/useCurrentScore"
+import { Helmet } from "react-helmet-async"
 
 export const CurrentScore = () => {
 	const restartGame = useCurrentScore()
 
 	return (
-		<section className="page-container min-h-[75vh] flex flex-col justify-between">
-			<ScoreTable />
+		<>
+			<Helmet>
+				<title>Current Score | Questions</title>
+			</Helmet>
 
-			<ButtonsContainer>
-				<Button variant="active" handleClick={restartGame}>
-					Next Question
-				</Button>
-			</ButtonsContainer>
-		</section>
+			<section className="page-container min-h-[75vh] flex flex-col justify-between">
+				<ScoreTable />
+
+				<ButtonsContainer>
+					<Button variant="active" handleClick={restartGame}>
+						Next Question
+					</Button>
+				</ButtonsContainer>
+			</section>
+		</>
 	)
 }
