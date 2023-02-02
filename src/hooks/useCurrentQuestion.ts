@@ -9,7 +9,7 @@ import { useFetch } from "./useFetch"
 
 type UseCurrentQuestion = {
 	currentQuestion: Question | null,
-	answerQuestion(answerId: string, optionIndex: number, optionImg: string | undefined): undefined
+	answerQuestion(answerId: string, optionIndex: number, optionImg: string | undefined): void
 }
 
 export const useCurrentQuestion = (): UseCurrentQuestion => {
@@ -18,7 +18,7 @@ export const useCurrentQuestion = (): UseCurrentQuestion => {
 	const setFetch = useFetch()
 
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
-	let fetchStatusInterval: number
+	let fetchStatusInterval: NodeJS.Timer
 
 	const { gameCode, questionsDispatch, user } = useContext(questionsContext) as Questions
 
