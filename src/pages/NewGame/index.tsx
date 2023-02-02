@@ -4,40 +4,53 @@ import { Form } from "@app/containers/Form"
 import { ErrorMsgList } from "@app/containers/ErrorMsgList"
 import { useNewGame } from "@app/hooks/useNewGame"
 import { NewGameInputList } from "@app/containers/NewGameInputLlist"
+import { Helmet } from "react-helmet-async"
+import { questionsContext } from "@app/contexts/questions.context"
+import { Questions } from "@app/types"
+import { useContext } from "react"
 
 export const NewGame = () => {
 	const { inputs, errorMsgs, addNewQuestion, disabledButtons, addNewInput, updateInputs } = useNewGame()
+	const { questions } = useContext(questionsContext) as Questions
 	const disablingAddingOptionBtn = (errorMsgs.length > 0 || inputs.length > 4) ? true : disabledButtons
 
 	return (
-		<section className="page-container">
-			<Form>
-				<NewGameInputList
-					list={inputs}
-					changeHandler={updateInputs}
-				/>
+		<>
+			<Helmet>
+				<title>
+					{questions.length > 0 ? "Add New Question" : "Create New Game"} | Questions
+				</title>
+			</Helmet>
 
-				<ErrorMsgList list={errorMsgs} />
-			</Form>
+			<section className="page-container">
+				<Form>
+					<NewGameInputList
+						list={inputs}
+						changeHandler={updateInputs}
+					/>
 
-			<ButtonsContainer>
-				<Button
-					handleClick={addNewInput}
-					variant="active"
-					disabled={disablingAddingOptionBtn}
-				>
-					Add another answer option
-				</Button>
+					<ErrorMsgList list={errorMsgs} />
+				</Form>
 
-				<Button
-					handleClick={addNewQuestion}
-					variant={inputs.length > 4 ? "active" : "inactive"}
-					disabled={disabledButtons}
-					containerCss="text-xl"
-				>
-					GO!
-				</Button>
-			</ButtonsContainer>
-		</section>
+				<ButtonsContainer>
+					<Button
+						handleClick={addNewInput}
+						variant="active"
+						disabled={disablingAddingOptionBtn}
+					>
+						Add another answer option
+					</Button>
+
+					<Button
+						handleClick={addNewQuestion}
+						variant={inputs.length > 4 ? "active" : "inactive"}
+						disabled={disabledButtons}
+						containerCss="text-xl"
+					>
+						GO!
+					</Button>
+				</ButtonsContainer>
+			</section>
+		</>
 	)
 }

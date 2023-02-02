@@ -2,44 +2,51 @@ import { Button } from "@app/components/Button"
 import { ButtonsContainer } from "@app/containers/ButtonsContainer"
 import { PossibleCorrectAnswers } from "@app/containers/PossibleCorrectAnswers"
 import { useOptionsForm } from "@app/hooks/useOptionsForm"
+import { Helmet } from "react-helmet-async"
 
 export const Options = () => {
 	const { currentQuestion, handleChecked, createGame, correctOptionID, addAnotherQuestion } = useOptionsForm()
 
 	return (
-		<section className="page-container">
-			<h2 className="subtitle mb-2 font-light">
-				Choose the correct option for the following question:
-			</h2>
+		<>
+			<Helmet>
+				<title>Options | Questions</title>
+			</Helmet>
 
-			<span className="highlighted">
-				{currentQuestion?.content}
-			</span>
+			<section className="page-container">
+				<h2 className="subtitle mb-2 font-light">
+					Choose the correct option for the following question:
+				</h2>
 
-			<PossibleCorrectAnswers
-				answers={currentQuestion.answers}
-				handleChange={handleChecked}
-				questionContent={currentQuestion.content}
-			/>
+				<span className="highlighted">
+					{currentQuestion?.content}
+				</span>
 
-			<ButtonsContainer>
-				<Button
-					variant="inactive"
-					disabled={!correctOptionID}
-					handleClick={createGame}
-					containerCss="text-xl"
-				>
-					Create Game!
-				</Button>
+				<PossibleCorrectAnswers
+					answers={currentQuestion.answers}
+					handleChange={handleChecked}
+					questionContent={currentQuestion.content}
+				/>
 
-				<Button
-					variant="active"
-					disabled={!correctOptionID}
-					handleClick={addAnotherQuestion}
-				>
-					Add another question
-				</Button>
-			</ButtonsContainer>
-		</section>
+				<ButtonsContainer>
+					<Button
+						variant="inactive"
+						disabled={!correctOptionID}
+						handleClick={createGame}
+						containerCss="text-xl"
+					>
+						Create Game!
+					</Button>
+
+					<Button
+						variant="active"
+						disabled={!correctOptionID}
+						handleClick={addAnotherQuestion}
+					>
+						Add another question
+					</Button>
+				</ButtonsContainer>
+			</section>
+		</>
 	)
 }
